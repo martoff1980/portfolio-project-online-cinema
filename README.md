@@ -5,7 +5,8 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 ## Key Features of Online Cinema
 
-< 1. **Authorization and Authentication**>
+<details>
+1. **Authorization and Authentication**
 
 - **User Registration**: \
   Users should be able to register using their email. After registration, an email is sent with a link to activate their account. If the user does not activate their account within 24 hours, the link becomes
@@ -119,7 +120,7 @@ activation. \
 **DB schema**\
 ![Accounts DB schema](images/structure_db.png)
 
-</ 1. **Authorization and Authentication**>
+</details>
 
 2. **Movies**
 
