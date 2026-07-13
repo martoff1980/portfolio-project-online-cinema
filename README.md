@@ -122,6 +122,7 @@ activation. \
 
 </details>
 
+<details>
 2. **Movies**
 
 **User Functionality**:
@@ -172,3 +173,4 @@ activation. \
 ## Relationships:
 
 - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
+</details>
