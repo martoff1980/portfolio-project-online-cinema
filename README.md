@@ -89,7 +89,7 @@ This field is optional.
 
 - Create a new `ActivationToken` upon registration.
 - If the user does not activate their account within 24 hours, the token becomes invalid.
-- Allow resending a new token if the old one expires. \
+- Allow resending a new token if the old one expires.
 - Use `celery-beat` to periodically remove expired tokens.
 
 **PasswordResetToken (password_reset_tokens table)** A token for resetting a forgotten password, sent to the user’s email upon request. \
@@ -141,13 +141,15 @@ This field is optional.
 - View a list of genres with the count of movies in each. Clicking on a genre shows all related movies.
 - Rate movies on a 10-point scale.
 - Notify users when their comments receive replies or likes.
-- **Moderator Functionality**:
+
+**Moderator Functionality**:
+
 - Perform CRUD operations on movies, genres, and actors.
 - Prevent the deletion of a movie if at least one user has purchased it.
 
 ### Entities and Their Attributes
 
-1. Genre (genres table) Represents a movie genre (e.g., Action, Drama, Comedy). \ **Attributes**:
+1. Genre (genres table) Represents a movie genre (e.g., Action, Drama, Comedy). **Attributes**:
 
 - `id`: Primary key (int), auto-incremented.
 - `name`: The genre’s name (e.g., "Action"). Must be unique and not null.
