@@ -422,20 +422,18 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - [Order DB schema](Order DB schema)
 </details>
 
-# Начать редактирование
-
 ## 5. **Payments**
 
 <details>
 
 - **User Functionality**:
 
-- Users can make payments using Stripe.
-- After payment, users receive a confirmation on the website and via email.
-- Users can view the history of all their payments, including:
-- Date and time.
-- Amount.
-- Status (successful, canceled, refunded).
+  - Users can make payments using Stripe.
+  - After payment, users receive a confirmation on the website and via email.
+  - Users can view the history of all their payments, including:
+  - Date and time.
+  - Amount.
+  - Status (successful, canceled, refunded).
 
   - **Validation**:
 
