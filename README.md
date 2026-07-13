@@ -422,6 +422,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - [Order DB schema](Order DB schema)
 </details>
 
+# Начать редактирование
+
 ## 5. **Payments**
 
 <details>
@@ -435,21 +437,21 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Amount.
 - Status (successful, canceled, refunded).
 
-**Validation**:
+    **Validation**:
 
-- Verify the total amount of the order.
-- Check the availability of the selected payment method.
-- Ensure the user is authenticated.
-- Validate transactions through webhooks provided by the payment system.
-- Update the order status upon successful payment.
-- If a transaction is declined, display recommendations to the user (e.g., "Try a different payment method").
+    - Verify the total amount of the order.
+    - Check the availability of the selected payment method.
+    - Ensure the user is authenticated.
+    - Validate transactions through webhooks provided by the payment system.
+    - Update the order status upon successful payment.
+    - If a transaction is declined, display recommendations to the user (e.g., "Try a different payment method").
 
-**Moderator Functionality**:
+    **Moderator Functionality**:
 
-- Admins can view a list of all payments with filters for:
-- Users.
-- Dates.
-- Statuses (successful, refunded, canceled).
+    - Admins can view a list of all payments with filters for:
+      - Users.
+      - Dates.
+      - Statuses (successful, refunded, canceled).
 
 ### Entities and Their Attributes
 
