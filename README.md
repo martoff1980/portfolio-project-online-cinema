@@ -176,7 +176,7 @@ activation. \
 - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
 </details>
 
-3. Shopping Cart
+3. **Shopping Cart**
 <details>
 
 - **User Functionality**:
@@ -258,7 +258,7 @@ this module.
 
 </details>
 
-4. Order
+4. **Order**
 <details>
 **User Functionality**:
 
@@ -447,7 +447,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 </details>
 
-6. Docker and Docker Compose
+6. **Docker and Docker Compose**
 <details>
 
 - **Project Containerization**: \
@@ -458,6 +458,19 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - **Custom Docker Images**: Create and maintain Docker images for the FastAPI application and related services.
 
 - **Single Command Setup**: Use a single command to launch all services via Docker Compose for streamlined development and deployment.
+</details>
+
+7. **Poetry for Dependency Management**
+<details>
+
+- **Dependency Simplification**:
+- Use Poetry for easy dependency management and virtual environment handling.
+- **Project Dependencies**:
+- Install required project dependencies via Poetry commands.
+- **Configuration File**:
+- Use `pyproject.toml` to specify all dependencies, versions, and additional configurations.
+- **Environment Management**:
+- Manage virtual environments seamlessly within the development workflow.
 </details>
 
 8. **CI/CD with GitHub Actions** \
