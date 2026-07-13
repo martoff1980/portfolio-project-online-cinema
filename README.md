@@ -189,20 +189,20 @@ This field is optional.
    - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
 
 5. **Movie (movies table)** Represents a movie’s main data. \
-   Attributes:
+   **Attributes**:
 
-- `id`: Primary key (int), auto-incremented.
-- `uuid`: A unique UUID for the movie, ensuring global uniqueness.
-- `name`: The movie’s title (string, not null).
-- `year`: The release year (int, not null).
-- `time`: The movie’s duration in minutes (int, not null).
-- `imdb`: The movie’s IMDb rating (float, not null).
-- `votes`: The number of votes on IMDb (int, not null).
-- `meta_score`: Metascore (float, optional).
-- `gross`: Gross revenue (float, optional).
-- `description`: A textual description or synopsis (text, not null).
-- `price`: The price of the movie (DECIMAL(10,2)).
-- `certification_id`: Foreign key to certifications.id (int, not null). This field ensures that the movie’s rating is always defined.
+    - `id`: Primary key (int), auto-incremented.
+    - `uuid`: A unique UUID for the movie, ensuring global uniqueness.
+    - `name`: The movie’s title (string, not null).
+    - `year`: The release year (int, not null).
+    - `time`: The movie’s duration in minutes (int, not null).
+    - `imdb`: The movie’s IMDb rating (float, not null).
+    - `votes`: The number of votes on IMDb (int, not null).
+    - `meta_score`: Metascore (float, optional).
+    - `gross`: Gross revenue (float, optional).
+    - `description`: A textual description or synopsis (text, not null).
+    - `price`: The price of the movie (DECIMAL(10,2)).
+    - `certification_id`: Foreign key to certifications.id (int, not null). This field ensures that the movie’s rating is always defined.
 
 **Constraints**:
 
