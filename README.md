@@ -489,7 +489,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Automatically deploy the application after passing all checks and merging pull requests to AWS EC2.
 </details>
 
-9. Swagger Documentation Requirements
+### 9. **Swagger Documentation Requirements**
+
 <details>
 
 - **OpenAPI Specification**:
