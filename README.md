@@ -31,7 +31,7 @@ convenience, a wide selection of content, and the ability to personalize the use
   - **Moderator**: In addition to catalog and user interface access, can manage movies on the site through the admin panel, view sales, etc.
   - **Admin**: Inherits all permissions from the above roles and can manage users, change group memberships, and manually activate accounts.
 
-## Entities and Their Attributes
+<summary> Entities and Their Attributes <summary>
 
 **UserGroupEnum (enum)** Enumeration of possible user groups (roles): \
 
