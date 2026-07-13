@@ -562,16 +562,18 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 <details>
 
 - **Automated Processes**: \
-- Configure GitHub Actions to automate code quality checks, testing, and deployment pipelines.
+  - Configure GitHub Actions to automate code quality checks, testing, and deployment pipelines.
 - **Code Quality Checks**: \
-- Run linters such as `flake8` or `black` to ensure code consistency.
-- Perform type checking with `mypy` to validate type annotations.
+  - Run linters such as `flake8` or `black` to ensure code consistency.
+  - Perform type checking with `mypy` to validate type annotations.
 - **Testing Automation**:
-- Execute all tests using `pytest` to validate functionality.
-- Generate and review code coverage reports for quality assurance.
+
+  - Execute all tests using `pytest` to validate functionality.
+  - Generate and review code coverage reports for quality assurance.
 
 - **Continuous Deployment**:
-- Automatically deploy the application after passing all checks and merging pull requests to AWS EC2.
+  - Automatically deploy the application after passing all checks and merging pull requests to AWS EC2.
+
 </details>
 
 ## 9. **Swagger Documentation Requirements**
