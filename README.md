@@ -46,46 +46,46 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 This field is optional.
 
-**UserGroup (user_groups table)** Stores user groups. \
-**Attributes**:
+**UserGroup (user_groups table)** Stores user groups. **Attributes**:
 
 - `id`: Primary key (int).
 - `name`: Name of the group (USER, MODERATOR, ADMIN), unique field.
 
 **Relationships**: One-to-many: One UserGroup can be related to many User records.
 
-**User (users table)** Represents registered users. **Attributes**: \
+**User (users table)** Represents registered users. **Attributes**:
 
-- `id`: Primary key (int). \
-- `email`: User’s email, unique and required, used for login and identification. \
-- `hashed_password`: User’s password hash, stored securely (not in plain text). \
+- `id`: Primary key (int).
+- `email`: User’s email, unique and required, used for login and identification.
+- `hashed_password`: User’s password hash, stored securely (not in plain text).
 - `is_active`: Boolean field indicating whether the account is activated. Initially
 - `False`, becomes `True` after activation.
 - `created_at`: Timestamp of when the user was created.
 - `updated_at`: Timestamp of the user’s last data update.
 - `group_id`: Foreign key referencing `UserGroup`, indicating the group the user belongs to (User, Moderator, Admin).
 
-**Relationships**: \
+**Relationships**:
 
-- One-to-many with `UserGroup` (via `group_id`): Each user belongs to exactly one group. \
-- One-to-one with `UserProfile`: Each user can have one profile with additional information. \
+- One-to-many with `UserGroup` (via `group_id`): Each user belongs to exactly one group.
+- One-to-one with `UserProfile`: Each user can have one profile with additional information.
 - One-to-many with `ActivationToken`, `PasswordResetToken`, `RefreshToken`.
 
-**UserProfile (user_profiles table)** Additional user information. \
-**Attributes**: \
-`id`: Primary key (int). \
-`user_id`: Foreign key referencing `users`. Unique, ensuring a one-to-one relationship with `User`. `first_name`: User’s first name (optional). \
-`last_name`: User’s last name (optional). \
-`avatar`: A link or identifier for the user’s avatar (e.g., a key in S3 storage). \ `gender`: Gender (MAN/WOMAN), optional. \
-`date_of_birth`: Date of birth, optional. `info`: A text field for a short bio or additional user info.
+**UserProfile (user_profiles table)** Additional user information. **Attributes**:
 
-**ActivationToken (activation_tokens table)** A token for account activation, sent to the user’s email after registration. \
-**Attributes**: \
-`id`: Primary key (int). \
-`user_id`: Foreign key referencing `users`. Unique, ensuring a one-to-one relationship with `User`. \
-`token`: A unique token. expires_at: The token’s expiration time (24 hours after issuance).
+- `id`: Primary key (int).
+- `user_id`: Foreign key referencing `users`. Unique, ensuring a one-to-one relationship with `User`.
+- `first_name`: User’s first name (optional).
+- `last_name`: User’s last name (optional).
+- `avatar`: A link or identifier for the user’s avatar (e.g., a key in S3 storage). - `gender`: Gender (MAN/WOMAN), optional.
+- `date_of_birth`: Date of birth, optional. `info`: A text field for a short bio or additional user info.
 
-**Tasks**:\
+**ActivationToken (activation_tokens table)** A token for account activation, sent to the user’s email after registration. **Attributes**:
+
+- `id`: Primary key (int).
+- `user_id`: Foreign key referencing `users`. Unique, ensuring a one-to-one relationship with `User`.
+- `token`: A unique token. expires_at: The token’s expiration time (24 hours after issuance).
+
+**Tasks**:
 
 - Create a new `ActivationToken` upon registration.
 - If the user does not activate their account within 24 hours, the token becomes invalid.
