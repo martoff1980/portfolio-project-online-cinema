@@ -483,22 +483,23 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 2. **PaymentItem (payment_items table)** Represents an individual item paid for in a single payment, mirroring an order line item at the time of payment.
 
-**Attributes**:
+   **Attributes**:
 
-- `id`: Primary key (int, auto-incremented).
-- `payment_id`: Foreign key referencing payments.id (int, not null), indicating which payment this item belongs to.
-- `order_item_id`: Foreign key referencing order_items.id (int, not null), linking back to the original order line item.
-- `price_at_payment`: The price of the specific order item at the time of payment (DECIMAL(10,2), not null). This ensures the payment record remains historically accurate, even if prices change later.
+   - `id`: Primary key (int, auto-incremented).
+   - `payment_id`: Foreign key referencing payments.id (int, not null), indicating which payment this item belongs to.
+   - `order_item_id`: Foreign key referencing order_items.id (int, not null), linking back to the original order line item.
+   - `price_at_payment`: The price of the specific order item at the time of payment (DECIMAL(10,2), not null). This ensures the payment record remains historically accurate, even if prices change
+     later.
 
-**Relationships**:
+   **Relationships**:
 
-- Many-to-one with `Payment`: Each payment item belongs to exactly one payment.
-- Many-to-one with `OrderItem`: Each payment item references an OrderItem to provide context for what was actually paid for.
+   - Many-to-one with `Payment`: Each payment item belongs to exactly one payment.
+   - Many-to-one with `OrderItem`: Each payment item references an OrderItem to provide context for what was actually paid for.
 
-**Key Points**:
+   **Key Points**:
 
-- `PaymentItem` captures a snapshot of the pricing and items at the exact moment of payment.
-- This granular data allows for detailed financial reporting, refunds of individual items, and easy reconciliation of payments against orders.
+   - `PaymentItem` captures a snapshot of the pricing and items at the exact moment of payment.
+   - This granular data allows for detailed financial reporting, refunds of individual items, and easy reconciliation of payments against orders.
 
 **Summary of Relationships**
 
