@@ -223,8 +223,8 @@ This field is optional.
   - `movie_id`: Foreign key to `movies.id`, part of composite primary key.
   - `genre_id`: Foreign key to `genres.id`, part of composite primary key.
 
-  - **movie_directors**: Connects `Movie` and `Director` (many-to-many). \
-    **Columns**:
+- **movie_directors**: Connects `Movie` and `Director` (many-to-many). \
+  **Columns**:
   - `movie_id`: Foreign key to movies.id, part of composite primary key. director_id: Foreign key to directors.id, part of composite primary key. movie_stars: Connects Movie and Star (many-to-many).
     Columns:
   - `movie_id`: Foreign key to movies.id, part of composite primary key. star_id: Foreign key to stars.id, part of composite primary key.
