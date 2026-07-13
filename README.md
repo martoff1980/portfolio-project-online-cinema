@@ -26,20 +26,20 @@ convenience, a wide selection of content, and the ability to personalize the use
   Users receive a pair of JWT tokens (access and refresh) upon login. Users can use the refresh token to obtain a new access token with a shorter time-to-live (TTL).
 
 - **User Groups**: \
-  Create three user groups: \
+  Create three user groups:
   - **User**: Access to the basic user interface.
   - **Moderator**: In addition to catalog and user interface access, can manage movies on the site through the admin panel, view sales, etc.
   - **Admin**: Inherits all permissions from the above roles and can manage users, change group memberships, and manually activate accounts.
 
 ### Entities and Their Attributes
 
-**UserGroupEnum (enum)** Enumeration of possible user groups (roles): \
+**UserGroupEnum (enum)** Enumeration of possible user groups (roles):
 
 - **USER**: A regular user with basic interface access.
 - **MODERATOR**: A user who, in addition to the basic interface, can manage content (e.g., movies), view sales, and perform some administrative tasks.
 - **ADMIN**: A user with extended rights. Can manage other users, change their groups, and manually activate accounts.
 
-**GenderEnum (enum)** Enumeration for storing a user’s gender: \
+**GenderEnum (enum)** Enumeration for storing a user’s gender:
 
 - **MAN**
 - **WOMAN**
@@ -47,16 +47,14 @@ convenience, a wide selection of content, and the ability to personalize the use
 This field is optional.
 
 **UserGroup (user_groups table)** Stores user groups. \
-**Attributes**: \
+**Attributes**:
 
-- `id`: Primary key (int).\
+- `id`: Primary key (int).
 - `name`: Name of the group (USER, MODERATOR, ADMIN), unique field.
 
-**Relationships**: \
-One-to-many: One UserGroup can be related to many User records.
+**Relationships**: One-to-many: One UserGroup can be related to many User records.
 
-**User (users table)** Represents registered users. \
-**Attributes**: \
+**User (users table)** Represents registered users. **Attributes**: \
 
 - `id`: Primary key (int). \
 - `email`: User’s email, unique and required, used for login and identification. \
