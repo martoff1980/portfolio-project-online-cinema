@@ -447,7 +447,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 </details>
 
-6. **Docker and Docker Compose**
+### 6. **Docker and Docker Compose**
+
 <details>
 
 - **Project Containerization**: \
@@ -460,7 +461,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - **Single Command Setup**: Use a single command to launch all services via Docker Compose for streamlined development and deployment.
 </details>
 
-7. **Poetry for Dependency Management**
+### 7. **Poetry for Dependency Management**
+
 <details>
 
 - **Dependency Simplification**:
@@ -473,7 +475,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Manage virtual environments seamlessly within the development workflow.
 </details>
 
-8. **CI/CD with GitHub Actions** \
+### 8. **CI/CD with GitHub Actions** \
+
 <details>
 
 - **Automated Processes**: \
@@ -501,7 +504,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Restrict access to API documentation, allowing visibility only for authorized users.
 </details>
 
-10. Writing Tests
+### 10. Writing Tests
+
 <details>
 
 - **API Endpoint Testing**:
