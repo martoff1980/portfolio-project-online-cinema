@@ -561,9 +561,9 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 <details>
 
-- **Automated Processes**: \
+- **Automated Processes**:
   - Configure GitHub Actions to automate code quality checks, testing, and deployment pipelines.
-- **Code Quality Checks**: \
+- **Code Quality Checks**:
   - Run linters such as `flake8` or `black` to ensure code consistency.
   - Perform type checking with `mypy` to validate type annotations.
 - **Testing Automation**:
