@@ -581,11 +581,12 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 <details>
 
 - **OpenAPI Specification**:
-- Use OpenAPI Specification (version 3.0 or above) for documentation.
+  - Use OpenAPI Specification (version 3.0 or above) for documentation.
 - **Complete API Documentation**:
-- Ensure all API endpoints are fully documented for developers and stakeholders.
+  - Ensure all API endpoints are fully documented for developers and stakeholders.
 - **Access Control**:
-- Restrict access to API documentation, allowing visibility only for authorized users.
+  - Restrict access to API documentation, allowing visibility only for authorized users.
+
 </details>
 
 ## 10. Writing Tests
@@ -593,20 +594,28 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 <details>
 
 - **API Endpoint Testing**:
-- Verify that endpoints return correct responses.
-- Test error handling and ensure proper feedback for invalid inputs.
+
+  - Verify that endpoints return correct responses.
+  - Test error handling and ensure proper feedback for invalid inputs.
 
 - **Validation Testing**:
-- Ensure business rules and validation logic work correctly (e.g., authentication, filtering, and sorting).
+
+  - Ensure business rules and validation logic work correctly (e.g., authentication, filtering, and sorting).
 
 - **Unit Tests**:
-- **Coverage**:
-- Data validation logic. Utility functions. Individual business rules.
+
+  - **Coverage**:
+    - Data validation logic.
+    - Utility functions.
+    - Individual business rules.
+
 - **Integration Tests**:
-- **Coverage**:
-- Interaction between endpoints and the database.
-- Authentication workflows, including JWT processing.
+
+  - **Coverage**:
+    - Interaction between endpoints and the database.
+    - Authentication workflows, including JWT processing.
+
 - **Functional Tests**:
-- Cover end-to-end user scenarios such as registration, login, movie filtering, and order placement.
+  - Cover end-to-end user scenarios such as registration, login, movie filtering, and order placement.
 
 </details>
