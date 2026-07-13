@@ -191,28 +191,29 @@ This field is optional.
 5. **Movie (movies table)** Represents a movie’s main data. \
    **Attributes**:
 
-    - `id`: Primary key (int), auto-incremented.
-    - `uuid`: A unique UUID for the movie, ensuring global uniqueness.
-    - `name`: The movie’s title (string, not null).
-    - `year`: The release year (int, not null).
-    - `time`: The movie’s duration in minutes (int, not null).
-    - `imdb`: The movie’s IMDb rating (float, not null).
-    - `votes`: The number of votes on IMDb (int, not null).
-    - `meta_score`: Metascore (float, optional).
-    - `gross`: Gross revenue (float, optional).
-    - `description`: A textual description or synopsis (text, not null).
-    - `price`: The price of the movie (DECIMAL(10,2)).
-    - `certification_id`: Foreign key to certifications.id (int, not null). This field ensures that the movie’s rating is always defined.
+   - `id`: Primary key (int), auto-incremented.
+   - `uuid`: A unique UUID for the movie, ensuring global uniqueness.
+   - `name`: The movie’s title (string, not null).
+   - `year`: The release year (int, not null).
+   - `time`: The movie’s duration in minutes (int, not null).
+   - `imdb`: The movie’s IMDb rating (float, not null).
+   - `votes`: The number of votes on IMDb (int, not null).
+   - `meta_score`: Metascore (float, optional).
+   - `gross`: Gross revenue (float, optional).
+   - `description`: A textual description or synopsis (text, not null).
+   - `price`: The price of the movie (DECIMAL(10,2)).
+   - `certification_id`: Foreign key to certifications.id (int, not null). This field ensures that the movie’s rating is always defined.
 
-**Constraints**:
+     **Constraints**:
 
-- A unique constraint on (name, year, time), ensuring that the combination of title, release year, and duration uniquely identifies a movie.
+   - A unique constraint on `(name, year, time)`, ensuring that the combination of title, release year, and duration uniquely identifies a movie.
 
-**Relationships**:
+   **Relationships**:
 
-- Many-to-one with `Certification` (via `certification_id`): Each movie has one certification.
-- Many-to-many with `Genre` (via `movie_genres`): A movie can belong to multiple genres. Many-to-many with Director (via movie_directors): A movie can have multiple directors. Many-to-many with Star
-  (via movie_stars): A movie can feature multiple stars.
+   - Many-to-one with `Certification` (via `certification_id`): Each movie has one certification.
+   - Many-to-many with `Genre` (via `movie_genres`): A movie can belong to multiple genres.
+   - Many-to-many with `Director` (via `movie_directors`): A movie can have multiple directors.
+   - Many-to-many with Star (via `movie_stars`): A movie can feature multiple stars.
 
 </details>
 
