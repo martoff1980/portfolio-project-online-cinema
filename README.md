@@ -472,14 +472,14 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
    **Relationships**:
 
-- Many-to-one with `User`: Each payment is linked to a specific user.
-- Many-to-one with `Order`: Each payment is associated with a single order, though an order might have multiple payments if partial or incremental payments are allowed in the future.
-- One-to-many with `PaymentItem`: A payment can consist of multiple items, each corresponding to a line item in the order.
+   - Many-to-one with `User`: Each payment is linked to a specific user.
+   - Many-to-one with `Order`: Each payment is associated with a single order, though an order might have multiple payments if partial or incremental payments are allowed in the future.
+   - One-to-many with `PaymentItem`: A payment can consist of multiple items, each corresponding to a line item in the order.
 
-**Key Points**:
+   **Key Points**:
 
-- `Payment` records serve as the financial transactions linked to orders.
-- Storing `external_payment_id` and `status` allows integration with payment gateways and easy tracking of payment lifecycle.
+   - `Payment` records serve as the financial transactions linked to orders.
+   - Storing `external_payment_id` and `status` allows integration with payment gateways and easy tracking of payment lifecycle.
 
 2. **PaymentItem (payment_items table)** Represents an individual item paid for in a single payment, mirroring an order line item at the time of payment.
 
