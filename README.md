@@ -93,16 +93,16 @@ This field is optional.
 - Use `celery-beat` to periodically remove expired tokens.
 
 **PasswordResetToken (password_reset_tokens table)** A token for resetting a forgotten password, sent to the user’s email upon request. \
-**Attributes**: \
+**Attributes**:
 
-- `id`: Primary key (int). `user_id`: Foreign key referencing users. Unique, ensuring a one-to-one relationship with `User`. \
-- `token`: A unique password reset token. \
+- `id`: Primary key (int). `user_id`: Foreign key referencing users. Unique, ensuring a one-to-one relationship with `User`.
+- `token`: A unique password reset token.
 - `expires_at`: The token’s expiration time.
 
-**Tasks**: \
+**Tasks**:
 
-- On login, the user receives a pair of tokens: access and refresh.\
-- When the access token expires, the user can use the refresh token to get a new access token. \
+- On login, the user receives a pair of tokens: access and refresh.
+- When the access token expires, the user can use the refresh token to get a new access token.
 - On logout, the refresh token is deleted, preventing further use.
 
 **Functional Requirements (Summary)**:
