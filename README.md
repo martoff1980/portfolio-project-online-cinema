@@ -366,15 +366,13 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 1.  **Order (orders table)** Represents a user's order containing one or more movies. \
     **Attributes**:
 
-          - `id`: Primary key (int, auto-incremented).
-          - `user_id`: Foreign key referencing `users.id` (int, not null), indicating which user owns the order.
-          - `created_at`: The date and time the order was created (timestamp with time zone, defaults to the current time).
-          - `status`: The current status of the order. Stored as an enum with possible values:
-          - `pending`: The order has been placed but not paid yet.
-          - `paid`: The order has been successfully paid.
-          - `canceled`: The order has been canceled by the user or through another process. Must not be null and defaults to `pending`.
-
-          - `total_amount`: The total cost of all items in the order at the time of creation (DECIMAL(10, 2), optional and can be recalculated before payment).
+    - `id`: Primary key (int, auto-incremented).
+    - `user_id`: Foreign key referencing `users.id` (int, not null), indicating which user owns the order.
+    - `created_at`: The date and time the order was created (timestamp with time zone, defaults to the current time).
+    - `status`: The current status of the order. Stored as an enum with possible values: - `pending`: The order has been placed but not paid yet.
+    - `paid`: The order has been successfully paid.
+    - `canceled`: The order has been canceled by the user or through another process. Must not be null and defaults to `pending`. - `total_amount`: The total cost of all items in the order at the time
+      of creation (DECIMAL(10, 2), optional and can be recalculated before payment).
 
           **Relationships**:
 
@@ -390,34 +388,33 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 2.  **OrderItem (order_items table)** Represents a single line item within an order, linking a specific movie to the order. \
     **Attributes**:
 
+    - `id`: Primary key (int, auto-incremented).
+    - `order_id`: Foreign key referencing orders.id (int, not null), indicating which order this item belongs to.
+    - `movie_id`: Foreign key referencing `movies.id` (int, not null), indicating which movie is included in the order.
+    - `price_at_order`: The price of the movie at the time the order was created (DECIMAL(10, 2), not null). Storing the price at order time ensures price changes do not retroactively affect
+      historical orders.
 
-      - `id`: Primary key (int, auto-incremented).
-      - `order_id`: Foreign key referencing orders.id (int, not null), indicating which order this item belongs to.
-      - `movie_id`: Foreign key referencing `movies.id` (int, not null), indicating which movie is included in the order.
-      - `price_at_order`: The price of the movie at the time the order was created (DECIMAL(10, 2), not null). Storing the price at order time ensures price changes do not retroactively affect historical
-        orders.
+    **Relationships**:
 
-      **Relationships**:
+    - Many-to-one with `Order`: Each order item belongs to exactly one order.
+    - Many-to-one with `Movie`: Each order item references exactly one movie.
 
-      - Many-to-one with `Order`: Each order item belongs to exactly one order.
-      - Many-to-one with `Movie`: Each order item references exactly one movie.
+    **Key Points**:
 
-      **Key Points**:
+    - `OrderItem` provides a breakdown of the order contents.
+    - Storing `price_at_order` ensures historical accuracy of the order data, even if movie prices change later.
 
-      - `OrderItem` provides a breakdown of the order contents.
-      - Storing `price_at_order` ensures historical accuracy of the order data, even if movie prices change later.
+    **Summary of Relationships**
 
-      **Summary of Relationships**
+    - **User (1) -- (n) Order**: A single user can have multiple orders.
+    - **Order (1) -- (n) OrderItem**: A single order can contain multiple items.
+    - **Movie (1) -- (n) OrderItem**: A single movie can appear in many orders from various users.
 
-      - **User (1) -- (n) Order**: A single user can have multiple orders.
-      - **Order (1) -- (n) OrderItem**: A single order can contain multiple items.
-      - **Movie (1) -- (n) OrderItem**: A single movie can appear in many orders from various users.
+    **Functional Implications**
 
-      **Functional Implications**
-
-      - Users can track their order history, including the movies purchased, the final amount paid, and the current status of each order.
-      - The presence of `price_at_order` in `OrderItem` ensures that financial records remain consistent over time, essential for audits, refunds, and reporting.
-      - The status field in Order allows for workflow management, including pending payment, cancellation, and handling refunds.
+    - Users can track their order history, including the movies purchased, the final amount paid, and the current status of each order.
+    - The presence of `price_at_order` in `OrderItem` ensures that financial records remain consistent over time, essential for audits, refunds, and reporting.
+    - The status field in Order allows for workflow management, including pending payment, cancellation, and handling refunds.
 
 **DB schema**
 
