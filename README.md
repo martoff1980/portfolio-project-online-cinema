@@ -377,16 +377,16 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
     - `total_amount`: The total cost of all items in the order at the time of creation (DECIMAL(10, 2), optional and can be recalculated before payment).
 
-            **Relationships**:
+    **Relationships**:
 
-            - One-to-many with OrderItem: An order can contain multiple order items, each representing a movie included in this order.
-            - Many-to-one with User: Each order is associated with a single user, who can have many orders over time.
+    - One-to-many with OrderItem: An order can contain multiple order items, each representing a movie included in this order.
+    - Many-to-one with User: Each order is associated with a single user, who can have many orders over time.
 
-            **Key Points**:
+    **Key Points**:
 
-            - `Order` provides a snapshot of which movies the user intends to purchase at a given moment.
-            - The `status` field allows tracking the lifecycle of the order: pending, then paid, or canceled.
-            - The `total_amount` can be checked or updated before finalizing payment, ensuring accurate billing.
+    - `Order` provides a snapshot of which movies the user intends to purchase at a given moment.
+    - The `status` field allows tracking the lifecycle of the order: pending, then paid, or canceled.
+    - The `total_amount` can be checked or updated before finalizing payment, ensuring accurate billing.
 
 2.  **OrderItem (order_items table)** Represents a single line item within an order, linking a specific movie to the order. \
     **Attributes**:
