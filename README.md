@@ -149,7 +149,7 @@ This field is optional.
 
 ### Entities and Their Attributes
 
-1. Genre (genres table) Represents a movie genre (e.g., Action, Drama, Comedy). **Attributes**:
+1. Genre (genres table) Represents a movie genre (e.g., Action, Drama, Comedy). \ **Attributes**:
 
 - `id`: Primary key (int), auto-incremented.
 - `name`: The genre’s name (e.g., "Action"). Must be unique and not null.
@@ -158,8 +158,8 @@ This field is optional.
 
 - Many-to-many with Movie through the movie_genres association table. A single genre can be associated with multiple movies, and a single movie can belong to multiple genres.
 
-**Star (stars table)** Represents an actor or actress starring in a movie. \
-**Attributes**:
+2. **Star (stars table)** Represents an actor or actress starring in a movie. \
+   **Attributes**:
 
 - `id`: Primary key (int), auto-incremented.
 - `name`: The star’s name. Must be unique and not null.
@@ -167,6 +167,15 @@ This field is optional.
 **Relationships**:
 
 - Many-to-many with `Movie` through the `movie_stars` association table. A star can appear in multiple movies, and a movie can have multiple stars.
+
+3. **Director (directors table)** Represents a movie director.\ Attributes:
+
+- `id`: Primary key (int), auto-incremented.
+- `name`: The director’s name. Must be unique and not null.
+
+**Relationships**:
+
+- Many-to-many with `Movie` through the `movie_directors` association table. A director can direct multiple movies, and a movie can have multiple directors.
 
 4. **Certification (certifications table)** Represents the rating or certification of a movie (e.g., PG-13, R). \
    **Attributes**:
