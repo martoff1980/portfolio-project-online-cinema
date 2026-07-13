@@ -5,7 +5,7 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 ## Key Features of Online Cinema
 
-### 1. **Authorization and Authentication**
+## 1. **Authorization and Authentication**
 
 <details>
 
