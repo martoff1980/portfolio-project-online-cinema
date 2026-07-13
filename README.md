@@ -248,26 +248,26 @@ This field is optional.
 
 - **User Functionality**:
 
-  - Users can add movies to the cart if they have not been purchased yet. \
-  - If the movie has already been purchased, a notification is displayed, indicating that repeat purchases are not allowed. \
-  - Users can remove movies from the cart if they decide not to proceed with the purchase. \
-  - Users can view a list of movies in their cart. \
-  - For each movie in the cart, the title, price, genre, and release year are displayed. \
-  - Users can pay for all movies in the cart at once. \
-  - After successful payment, movies are moved to the "Purchased" list. \
+  - Users can add movies to the cart if they have not been purchased yet.
+  - If the movie has already been purchased, a notification is displayed, indicating that repeat purchases are not allowed.
+  - Users can remove movies from the cart if they decide not to proceed with the purchase.
+  - Users can view a list of movies in their cart.
+  - For each movie in the cart, the title, price, genre, and release year are displayed.
+  - Users can pay for all movies in the cart at once.
+  - After successful payment, movies are moved to the "Purchased" list.
   - Users can manually clear the cart entirely.
 
-  **Validation**: \
+  **Validation**:
 
-  - Ensure all movies are available for purchase before creating an order.\
-  - Exclude movies already purchased, notifying the user. \
-  - Prompt unregistered users to sign up before completing a purchase. \
+  - Ensure all movies are available for purchase before creating an order.
+  - Exclude movies already purchased, notifying the user.
+  - Prompt unregistered users to sign up before completing a purchase.
   - Prevent adding the same movie to the cart more than once.
 
-- **Moderator Functionality**: \
+- **Moderator Functionality**:
 
-- Admins can view the contents of users' carts for analysis or troubleshooting. \
-- Notify moderators when attempting to delete a movie that exists in users' carts. \
+  - Admins can view the contents of users' carts for analysis or troubleshooting.
+  - Notify moderators when attempting to delete a movie that exists in users' carts.
 
 Below is a detailed description of the entities and their attributes for the **Shopping Cart** functionality. These entities assume that `User` and `Movie` are defined elsewhere and are imported into
 this module.
