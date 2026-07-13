@@ -547,13 +547,14 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 <details>
 
 - **Dependency Simplification**:
-- Use Poetry for easy dependency management and virtual environment handling.
+  - Use Poetry for easy dependency management and virtual environment handling.
 - **Project Dependencies**:
-- Install required project dependencies via Poetry commands.
+  - Install required project dependencies via Poetry commands.
 - **Configuration File**:
-- Use `pyproject.toml` to specify all dependencies, versions, and additional configurations.
+  - Use `pyproject.toml` to specify all dependencies, versions, and additional configurations.
 - **Environment Management**:
-- Manage virtual environments seamlessly within the development workflow.
+  - Manage virtual environments seamlessly within the development workflow.
+
 </details>
 
 ## 8. **CI/CD with GitHub Actions**
