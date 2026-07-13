@@ -417,7 +417,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 - Users can track their order history, including the movies purchased, the final amount paid, and the current status of each order.
 - The presence of `price_at_order` in `OrderItem` ensures that financial records remain consistent over time, essential for audits, refunds, and reporting.
-- The status field in Order allows for workflow management, including pending payment, cancellation, and handling refunds.
+- The `status` field in `Order` allows for workflow management, including pending payment, cancellation, and handling refunds.
 
 **DB schema**
 
