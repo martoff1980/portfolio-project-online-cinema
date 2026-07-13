@@ -179,15 +179,15 @@ This field is optional.
    - Many-to-many with `Movie` through the `movie_directors` association table. A director can direct multiple movies, and a movie can have multiple directors.
 
 4. **Certification (certifications table)** Represents the rating or certification of a movie (e.g., PG-13, R). \
-   **Attributes**:
+    **Attributes**:
 
-- `id`: Primary key (int), auto-incremented.
-- `name`: The certification name. Must be unique and not null (e.g., "PG-13").
+   - `id`: Primary key (int), auto-incremented.
+   - `name`: The certification name. Must be unique and not null (e.g., "PG-13").
 
-## Relationships:
+   **Relationships**:
 
-- One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
-</details>
+   - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
+   </details>
 
 ## 3. **Shopping Cart**
 
