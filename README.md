@@ -444,12 +444,12 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
     - Update the order status upon successful payment.
     - If a transaction is declined, display recommendations to the user (e.g., "Try a different payment method").
 
-  **Moderator Functionality**:
+  - **Moderator Functionality**:
 
-      - Admins can view a list of all payments with filters for:
-      - Users.
-      - Dates.
-      - Statuses (successful, refunded, canceled).
+    - Admins can view a list of all payments with filters for:
+    - Users.
+    - Dates.
+    - Statuses (successful, refunded, canceled).
 
 ### Entities and Their Attributes
 
