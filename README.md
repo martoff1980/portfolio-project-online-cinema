@@ -343,9 +343,7 @@ this module.
   - Users can cancel orders before payment is completed.
   - Once paid, orders can only be canceled via a refund request.
   - After successful payment, users receive an email confirmation.
-
-    **Validation**:
-
+  - **Validation**:
     - Ensure the cart is not empty before placing an order.
     - Exclude movies already purchased by the user.
     - Ensure all movies in the order are available for purchase.
