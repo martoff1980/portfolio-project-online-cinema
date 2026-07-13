@@ -515,7 +515,9 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
   through webhooks.
 - Detailed payment itemization (`PaymentItem`) supports precise financial audits, reporting, and troubleshooting in case of disputes or inquiries.
 
-DB schema ![Payment DB schema](Payment DB schema)
+**DB schema**
+
+![Payment DB schema](Payment DB schema)
 
 </details>
 
@@ -523,14 +525,21 @@ DB schema ![Payment DB schema](Payment DB schema)
 
 <details>
 
-- **Project Containerization**: \
-- Use Docker to containerize the project and manage related services efficiently.
-- **Service Management**: \
-  Deploy multiple services like FastAPI, Redis, Celery, and MinIO using Docker Compose.
+- **Project Containerization**:
 
-- **Custom Docker Images**: Create and maintain Docker images for the FastAPI application and related services.
+  - Use Docker to containerize the project and manage related services efficiently.
 
-- **Single Command Setup**: Use a single command to launch all services via Docker Compose for streamlined development and deployment.
+- **Service Management**:
+
+  - Deploy multiple services like FastAPI, Redis, Celery, and MinIO using Docker Compose.
+
+- **Custom Docker Images**:
+
+  - Create and maintain Docker images for the FastAPI application and related services.
+
+- **Single Command Setup**:
+  - Use a single command to launch all services via Docker Compose for streamlined development and deployment.
+
 </details>
 
 ## 7. **Poetry for Dependency Management**
