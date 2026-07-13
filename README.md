@@ -354,10 +354,10 @@ this module.
 
 - **Moderator Functionality**:
 
-- Admins can view all user orders with filters for:
-- Users.
-- Dates.
-- Statuses (paid, canceled, etc.).
+  - Admins can view all user orders with filters for:
+    - Users.
+    - Dates.
+    - Statuses (paid, canceled, etc.).
 
 Below is a detailed description of the **Order** and **OrderItem** entities and their attributes, including their relationships and significance within the ordering process.
 
