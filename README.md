@@ -57,13 +57,15 @@ One-to-many: One UserGroup can be related to many User records.
 
 **User (users table)** Represents registered users. \
 **Attributes**: \
-`id`: Primary key (int). \
-`email`: User’s email, unique and required, used for login and identification. \
-`hashed_password`: User’s password hash, stored securely (not in plain text). \ `is_active`: Boolean field indicating whether the account is activated. Initially `False`, becomes `True` after
-activation. \
-`created_at`: Timestamp of when the user was created. \
-`updated_at`: Timestamp of the user’s last data update. \
-`group_id`: Foreign key referencing `UserGroup`, indicating the group the user belongs to (User, Moderator, Admin).
+
+- `id`: Primary key (int). \
+- `email`: User’s email, unique and required, used for login and identification. \
+- `hashed_password`: User’s password hash, stored securely (not in plain text). \
+- `is_active`: Boolean field indicating whether the account is activated. Initially
+- `False`, becomes `True` after activation.
+- `created_at`: Timestamp of when the user was created.
+- `updated_at`: Timestamp of the user’s last data update.
+- `group_id`: Foreign key referencing `UserGroup`, indicating the group the user belongs to (User, Moderator, Admin).
 
 **Relationships**: \
 
