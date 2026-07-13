@@ -407,17 +407,17 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
     - `OrderItem` provides a breakdown of the order contents.
     - Storing `price_at_order` ensures historical accuracy of the order data, even if movie prices change later.
 
-    **Summary of Relationships**
+**Summary of Relationships**
 
-    - **User (1) -- (n) Order**: A single user can have multiple orders.
-    - **Order (1) -- (n) OrderItem**: A single order can contain multiple items.
-    - **Movie (1) -- (n) OrderItem**: A single movie can appear in many orders from various users.
+- **User (1) -- (n) Order**: A single user can have multiple orders.
+- **Order (1) -- (n) OrderItem**: A single order can contain multiple items.
+- **Movie (1) -- (n) OrderItem**: A single movie can appear in many orders from various users.
 
-    **Functional Implications**
+**Functional Implications**
 
-    - Users can track their order history, including the movies purchased, the final amount paid, and the current status of each order.
-    - The presence of `price_at_order` in `OrderItem` ensures that financial records remain consistent over time, essential for audits, refunds, and reporting.
-    - The status field in Order allows for workflow management, including pending payment, cancellation, and handling refunds.
+- Users can track their order history, including the movies purchased, the final amount paid, and the current status of each order.
+- The presence of `price_at_order` in `OrderItem` ensures that financial records remain consistent over time, essential for audits, refunds, and reporting.
+- The status field in Order allows for workflow management, including pending payment, cancellation, and handling refunds.
 
 **DB schema**
 
