@@ -5,7 +5,7 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 ## Key Features of Online Cinema
 
-1. **Authorization and Authentication**
+### 1. **Authorization and Authentication**
 
 <details>
 
@@ -123,7 +123,8 @@ activation. \
 
 </details>
 
-2. **Movies**
+### 2. **Movies**
+
 <details>
 
 **User Functionality**:
@@ -176,7 +177,8 @@ activation. \
 - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
 </details>
 
-3. **Shopping Cart**
+### 3. **Shopping Cart**
+
 <details>
 
 - **User Functionality**:
@@ -258,7 +260,8 @@ this module.
 
 </details>
 
-4. **Order**
+## 4. **Order**
+
 <details>
 **User Functionality**:
 
@@ -355,7 +358,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - [Order DB schema](Order DB schema)
 </details>
 
-5. **Payments**
+## 5. **Payments**
+
 <details>
 
 - **User Functionality**:
