@@ -319,7 +319,7 @@ this module.
 - A `Cart` ensures centralized management of all items a user wants to purchase.
 - The `CartItem` model enforces uniqueness of movies in a user's cart and tracks when items were added, which can be useful for UI features or analytics.
 
-2. DB schema
+**DB schema**
 
 - [Cart DB schema](Cart DB schema)
 
@@ -328,28 +328,29 @@ this module.
 ## 4. **Order**
 
 <details>
-**User Functionality**:
 
-- Users can place orders for movies in their cart.
-- If movies are unavailable (e.g., deleted, region-locked), they are excluded from the order with a notification to the user.
-- Users can view a list of all their orders.
-- For each order, the following details are displayed:
-- Date and time.
-- List of movies included.
-- Total amount.
-- Order status (paid, canceled, pending).
-- After confirming an order, users are redirected to a payment gateway.
-- Users can cancel orders before payment is completed.
-- Once paid, orders can only be canceled via a refund request.
-- After successful payment, users receive an email confirmation.
+- **User Functionality**:
 
-**Validation**:
+  - Users can place orders for movies in their cart.
+  - If movies are unavailable (e.g., deleted, region-locked), they are excluded from the order with a notification to the user.
+  - Users can view a list of all their orders.
+  - For each order, the following details are displayed:
+    - Date and time.
+    - List of movies included.
+    - Total amount.
+    - Order status (paid, canceled, pending).
+  - After confirming an order, users are redirected to a payment gateway.
+  - Users can cancel orders before payment is completed.
+  - Once paid, orders can only be canceled via a refund request.
+  - After successful payment, users receive an email confirmation.
 
-- Ensure the cart is not empty before placing an order.
-- Exclude movies already purchased by the user.
-- Ensure all movies in the order are available for purchase.
-- Check that no other orders with the same movies are already pending.
-- Revalidate the total amount before payment in case of price changes.
+    **Validation**:
+
+    - Ensure the cart is not empty before placing an order.
+    - Exclude movies already purchased by the user.
+    - Ensure all movies in the order are available for purchase.
+    - Check that no other orders with the same movies are already pending.
+    - Revalidate the total amount before payment in case of price changes.
 
 - **Moderator Functionality**:
 
