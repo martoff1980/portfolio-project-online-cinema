@@ -453,9 +453,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ### Entities and Their Attributes
 
-1. **Payment (payments table)** Represents a payment transaction made by a user for an order.
-
-**Attributes**:
+1. **Payment (payments table)** Represents a payment transaction made by a user for an order. \ **Attributes**:
 
 - `id`: Primary key (int, auto-incremented).
 - `user_id`: Foreign key referencing users.id (int, not null), indicating which user made this payment.
