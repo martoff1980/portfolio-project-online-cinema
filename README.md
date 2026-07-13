@@ -119,7 +119,7 @@ activation. \
 **DB schema**\
 ![Accounts DB schema](images/structure_db.png)
 
-</1. **Authorization and Authentication**>
+</ 1. **Authorization and Authentication**>
 
 2. **Movies**
 
