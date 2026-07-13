@@ -156,9 +156,9 @@ This field is optional.
    - `id`: Primary key (int), auto-incremented.
    - `name`: The genre’s name (e.g., "Action"). Must be unique and not null.
 
-**Relationships**:
+   **Relationships**:
 
-- Many-to-many with Movie through the movie_genres association table. A single genre can be associated with multiple movies, and a single movie can belong to multiple genres.
+   - Many-to-many with Movie through the movie_genres association table. A single genre can be associated with multiple movies, and a single movie can belong to multiple genres.
 
 2. **Star (stars table)** Represents an actor or actress starring in a movie. \
    **Attributes**:
