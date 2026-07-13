@@ -144,7 +144,7 @@ activation. \
 - Perform CRUD operations on movies, genres, and actors.
 - Prevent the deletion of a movie if at least one user has purchased it.
 
-## Entities and Their Attributes
+### Entities and Their Attributes
 
 1. Genre (genres table) Represents a movie genre (e.g., Action, Drama, Comedy). \ **Attributes**:
 
@@ -174,4 +174,337 @@ activation. \
 ## Relationships:
 
 - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
+</details>
+
+3. Shopping Cart
+<details>
+
+- **User Functionality**:
+
+  - Users can add movies to the cart if they have not been purchased yet. \
+  - If the movie has already been purchased, a notification is displayed, indicating that repeat purchases are not allowed. \
+  - Users can remove movies from the cart if they decide not to proceed with the purchase. \
+  - Users can view a list of movies in their cart. \
+  - For each movie in the cart, the title, price, genre, and release year are displayed. \
+  - Users can pay for all movies in the cart at once. \
+  - After successful payment, movies are moved to the "Purchased" list. \
+  - Users can manually clear the cart entirely.
+
+  **Validation**: \
+
+  - Ensure all movies are available for purchase before creating an order.\
+  - Exclude movies already purchased, notifying the user. \
+  - Prompt unregistered users to sign up before completing a purchase. \
+  - Prevent adding the same movie to the cart more than once.
+
+- **Moderator Functionality**: \
+
+- Admins can view the contents of users' carts for analysis or troubleshooting. \
+- Notify moderators when attempting to delete a movie that exists in users' carts. \
+
+Below is a detailed description of the entities and their attributes for the **Shopping Cart** functionality. These entities assume that `User` and `Movie` are defined elsewhere and are imported into
+this module.
+
+### Entities and Their Attributes
+
+1. **Cart (carts table)** Represents a user's shopping cart. Each user can have exactly one cart. \
+   **Attributes**:
+
+- `id`: Primary key (int), auto-incremented. \
+- `user_id`: Foreign key referencing `users.id`, not null and unique, ensuring a one-to-one relationship with the user. \
+
+**Relationships**:
+
+- One-to-one with `User`: Each user has exactly one `Cart`, and each `Cart` belongs to one `User`.
+- One-to-many with `CartItem`: A cart can contain multiple cart items.
+
+**Key Points**:
+
+- The unique constraint on `user_id` guarantees that each user can have only one cart. \
+- Acts as a container for `CartItem` records.
+
+2. **CartItem (cart_items table)** Represents a single item (movie) placed in a user's cart. \
+   **Attributes**:
+
+- `id`: Primary key (int), auto-incremented. \
+- `cart_id`: Foreign key referencing `carts.id`, not null, indicating which cart the item belongs to. \
+- `movie_id`: Foreign key referencing `movies.id`, not null, indicating which movie is added to the cart. \
+- `added_at`: Timestamp of when the movie was added to the cart, defaults to the current time.
+
+**Relationships**:
+
+- Many-to-one with `Cart`: Each `CartItem` belongs to exactly one `Cart`. \
+- Optionally, a many-to-one relationship with `Movie` can be defined if needed. Each `CartItem` references exactly one `Movie`.
+
+**Constraints**:
+
+- A unique constraint on `(cart_id, movie_id)` ensures that the same movie cannot be added to a single cart more than once.
+
+**Summary of Relationships**
+
+- **User - Cart (1:1)**: Each user can have one unique cart.
+- **Cart - CartItem (1:n)**: One cart can have many cart items.
+- **CartItem - Movie (n:1)** (optional explicit relationship): Each cart item represents a single movie.
+
+**Functional Implications**
+
+- A `User` can manage their cart (add, remove, or clear items).
+- A `Cart` ensures centralized management of all items a user wants to purchase.
+- The `CartItem` model enforces uniqueness of movies in a user's cart and tracks when items were added, which can be useful for UI features or analytics.
+
+2. DB schema
+
+- [Cart DB schema](Cart DB schema)
+
+</details>
+
+4. Order
+<details>
+**User Functionality**:
+
+- Users can place orders for movies in their cart.
+- If movies are unavailable (e.g., deleted, region-locked), they are excluded from the order with a notification to the user.
+- Users can view a list of all their orders.
+- For each order, the following details are displayed:
+- Date and time.
+- List of movies included.
+- Total amount.
+- Order status (paid, canceled, pending).
+- After confirming an order, users are redirected to a payment gateway.
+- Users can cancel orders before payment is completed.
+- Once paid, orders can only be canceled via a refund request.
+- After successful payment, users receive an email confirmation.
+
+**Validation**:
+
+- Ensure the cart is not empty before placing an order.
+- Exclude movies already purchased by the user.
+- Ensure all movies in the order are available for purchase.
+- Check that no other orders with the same movies are already pending.
+- Revalidate the total amount before payment in case of price changes.
+
+- **Moderator Functionality**:
+
+- Admins can view all user orders with filters for:
+- Users.
+- Dates.
+- Statuses (paid, canceled, etc.).
+
+Below is a detailed description of the **Order** and **OrderItem** entities and their attributes, including their relationships and significance within the ordering process.
+
+### Entities and Their Attributes
+
+1.**Order (orders table)** Represents a user's order containing one or more movies.
+
+**Attributes**:
+
+- `id`: Primary key (int, auto-incremented).
+- `user_id`: Foreign key referencing `users.id` (int, not null), indicating which user owns the order.
+- `created_at`: The date and time the order was created (timestamp with time zone, defaults to the current time).
+- `status`: The current status of the order. Stored as an enum with possible values:
+- `pending`: The order has been placed but not paid yet.
+- `paid`: The order has been successfully paid.
+- `canceled`: The order has been canceled by the user or through another process. Must not be null and defaults to `pending`.
+
+- `total_amount`: The total cost of all items in the order at the time of creation (DECIMAL(10, 2), optional and can be recalculated before payment).
+
+**Relationships**:
+
+- One-to-many with OrderItem: An order can contain multiple order items, each representing a movie included in this order.
+- Many-to-one with User: Each order is associated with a single user, who can have many orders over time.
+
+**Key Points**:
+
+- `Order` provides a snapshot of which movies the user intends to purchase at a given moment.
+- The `status` field allows tracking the lifecycle of the order: pending, then paid, or canceled.
+- The `total_amount` can be checked or updated before finalizing payment, ensuring accurate billing.
+
+2. **OrderItem (order_items table)** Represents a single line item within an order, linking a specific movie to the order. \
+   **Attributes**:
+
+- `id`: Primary key (int, auto-incremented).
+- `order_id`: Foreign key referencing orders.id (int, not null), indicating which order this item belongs to.
+- `movie_id`: Foreign key referencing `movies.id` (int, not null), indicating which movie is included in the order.
+- `price_at_order`: The price of the movie at the time the order was created (DECIMAL(10, 2), not null). Storing the price at order time ensures price changes do not retroactively affect historical
+  orders.
+
+**Relationships**:
+
+- Many-to-one with `Order`: Each order item belongs to exactly one order.
+- Many-to-one with `Movie`: Each order item references exactly one movie.
+
+**Key Points**:
+
+- `OrderItem` provides a breakdown of the order contents.
+- Storing `price_at_order` ensures historical accuracy of the order data, even if movie prices change later.
+
+**Summary of Relationships**
+
+- **User (1) -- (n) Order**: A single user can have multiple orders.
+- **Order (1) -- (n) OrderItem**: A single order can contain multiple items.
+- **Movie (1) -- (n) OrderItem**: A single movie can appear in many orders from various users.
+
+**Functional Implications**
+
+- Users can track their order history, including the movies purchased, the final amount paid, and the current status of each order.
+- The presence of `price_at_order` in `OrderItem` ensures that financial records remain consistent over time, essential for audits, refunds, and reporting.
+- The status field in Order allows for workflow management, including pending payment, cancellation, and handling refunds.
+
+**DB schema**
+
+- [Order DB schema](Order DB schema)
+</details>
+
+5. **Payments**
+<details>
+
+- **User Functionality**:
+
+- Users can make payments using Stripe.
+- After payment, users receive a confirmation on the website and via email.
+- Users can view the history of all their payments, including:
+- Date and time.
+- Amount.
+- Status (successful, canceled, refunded).
+
+**Validation**:
+
+- Verify the total amount of the order.
+- Check the availability of the selected payment method.
+- Ensure the user is authenticated.
+- Validate transactions through webhooks provided by the payment system.
+- Update the order status upon successful payment.
+- If a transaction is declined, display recommendations to the user (e.g., "Try a different payment method").
+
+**Moderator Functionality**:
+
+- Admins can view a list of all payments with filters for:
+- Users.
+- Dates.
+- Statuses (successful, refunded, canceled).
+
+### Entities and Their Attributes
+
+1. **Payment (payments table)** Represents a payment transaction made by a user for an order.
+
+**Attributes**:
+
+- `id`: Primary key (int, auto-incremented).
+- `user_id`: Foreign key referencing users.id (int, not null), indicating which user made this payment.
+- `order_id`: Foreign key referencing orders.id (int, not null), indicating which order this payment is associated with.
+- `created_at`: Timestamp recording when the payment was created (timestamp with time zone, defaults to the current time).
+- `status`: Current status of the payment, stored as an enum. Possible values include: \ **successful**: The payment has been completed successfully. \
+  **canceled** : The payment was canceled before completion. \ **refunded**: The amount was refunded after a successful payment. Defaults to `successful`, but can be changed as the transaction progresses
+  through its lifecycle.
+  - `amount`: The total amount of the payment (DECIMAL(10,2), not null), ensuring accurate financial records even if the order's pricing changes.
+  - `external_payment_id`: An optional string field to store the external transaction ID from the payment provider (e.g., Stripe's charge_id), enabling easy cross-referencing and validation.
+
+**Relationships**:
+
+- Many-to-one with `User`: Each payment is linked to a specific user.
+- Many-to-one with `Order`: Each payment is associated with a single order, though an order might have multiple payments if partial or incremental payments are allowed in the future.
+- One-to-many with `PaymentItem`: A payment can consist of multiple items, each corresponding to a line item in the order.
+
+**Key Points**:
+
+- `Payment` records serve as the financial transactions linked to orders.
+- Storing `external_payment_id` and `status` allows integration with payment gateways and easy tracking of payment lifecycle.
+
+2. **PaymentItem (payment_items table)** Represents an individual item paid for in a single payment, mirroring an order line item at the time of payment.
+
+**Attributes**:
+
+- `id`: Primary key (int, auto-incremented).
+- `payment_id`: Foreign key referencing payments.id (int, not null), indicating which payment this item belongs to.
+- `order_item_id`: Foreign key referencing order_items.id (int, not null), linking back to the original order line item.
+- `price_at_payment`: The price of the specific order item at the time of payment (DECIMAL(10,2), not null). This ensures the payment record remains historically accurate, even if prices change later.
+
+**Relationships**:
+
+- Many-to-one with `Payment`: Each payment item belongs to exactly one payment.
+- Many-to-one with `OrderItem`: Each payment item references an OrderItem to provide context for what was actually paid for.
+
+**Key Points**:
+
+- `PaymentItem` captures a snapshot of the pricing and items at the exact moment of payment.
+- This granular data allows for detailed financial reporting, refunds of individual items, and easy reconciliation of payments against orders.
+
+**Summary of Relationships**
+
+- **User (1) -- (n) Payment**: A user can have multiple payments over time.
+- **Order (1) -- (n) Payment**: An order can be associated with one or more payments (if partial payments are introduced).
+- **Payment (1) -- (n) PaymentItem**: A payment can cover multiple order items.
+- **OrderItem (1) -- (n) PaymentItem**: Multiple payment items can reference different order items of potentially the same order, allowing flexible payment structures.
+
+**Functional Implications**
+
+- Users have a clear history of all their payments, including details of when, how much, and which items were paid for.
+- The `status` field and `external_payment_id` facilitate robust integration with external payment gateways (like Stripe), enabling features like refunds, cancellations, and transaction validations
+  through webhooks.
+- Detailed payment itemization (`PaymentItem`) supports precise financial audits, reporting, and troubleshooting in case of disputes or inquiries. DB schema
+
+![Payment DB schema](Payment DB schema)
+
+</details>
+
+6. Docker and Docker Compose
+<details>
+
+- **Project Containerization**: \
+- Use Docker to containerize the project and manage related services efficiently.
+- **Service Management**: \
+  Deploy multiple services like FastAPI, Redis, Celery, and MinIO using Docker Compose.
+
+- **Custom Docker Images**: Create and maintain Docker images for the FastAPI application and related services.
+
+- **Single Command Setup**: Use a single command to launch all services via Docker Compose for streamlined development and deployment.
+</details>
+
+8. **CI/CD with GitHub Actions** \
+<details>
+
+- **Automated Processes**: \
+- Configure GitHub Actions to automate code quality checks, testing, and deployment pipelines.
+- **Code Quality Checks**: \
+- Run linters such as `flake8` or `black` to ensure code consistency.
+- Perform type checking with `mypy` to validate type annotations.
+- **Testing Automation**:
+- Execute all tests using `pytest` to validate functionality.
+- Generate and review code coverage reports for quality assurance.
+
+- **Continuous Deployment**:
+- Automatically deploy the application after passing all checks and merging pull requests to AWS EC2.
+</details>
+
+9. Swagger Documentation Requirements
+<details>
+
+- **OpenAPI Specification**:
+- Use OpenAPI Specification (version 3.0 or above) for documentation.
+- **Complete API Documentation**:
+- Ensure all API endpoints are fully documented for developers and stakeholders.
+- **Access Control**:
+- Restrict access to API documentation, allowing visibility only for authorized users.
+</details>
+
+10. Writing Tests
+<details>
+
+- **API Endpoint Testing**:
+- Verify that endpoints return correct responses.
+- Test error handling and ensure proper feedback for invalid inputs.
+
+- **Validation Testing**:
+- Ensure business rules and validation logic work correctly (e.g., authentication, filtering, and sorting).
+
+- **Unit Tests**:
+- **Coverage**:
+- Data validation logic. Utility functions. Individual business rules.
+- **Integration Tests**:
+- **Coverage**:
+- Interaction between endpoints and the database.
+- Authentication workflows, including JWT processing.
+- **Functional Tests**:
+- Cover end-to-end user scenarios such as registration, login, movie filtering, and order placement.
+
 </details>
