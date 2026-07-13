@@ -280,15 +280,15 @@ this module.
 - `id`: Primary key (int), auto-incremented.
 - `user_id`: Foreign key referencing `users.id`, not null and unique, ensuring a one-to-one relationship with the user.
 
-**Relationships**:
+  **Relationships**:
 
-- One-to-one with `User`: Each user has exactly one `Cart`, and each `Cart` belongs to one `User`.
-- One-to-many with `CartItem`: A cart can contain multiple cart items.
+  - One-to-one with `User`: Each user has exactly one `Cart`, and each `Cart` belongs to one `User`.
+  - One-to-many with `CartItem`: A cart can contain multiple cart items.
 
-**Key Points**:
+  **Key Points**:
 
-- The unique constraint on `user_id` guarantees that each user can have only one cart. \
-- Acts as a container for `CartItem` records.
+  - The unique constraint on `user_id` guarantees that each user can have only one cart. \
+  - Acts as a container for `CartItem` records.
 
 2. **CartItem (cart_items table)** Represents a single item (movie) placed in a user's cart. \
    **Attributes**:
