@@ -447,9 +447,9 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
   - **Moderator Functionality**:
 
     - Admins can view a list of all payments with filters for:
-    - Users.
-    - Dates.
-    - Statuses (successful, refunded, canceled).
+      - Users.
+      - Dates.
+      - Statuses (successful, refunded, canceled).
 
 ### Entities and Their Attributes
 
