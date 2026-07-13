@@ -461,9 +461,11 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - `user_id`: Foreign key referencing users.id (int, not null), indicating which user made this payment.
 - `order_id`: Foreign key referencing orders.id (int, not null), indicating which order this payment is associated with.
 - `created_at`: Timestamp recording when the payment was created (timestamp with time zone, defaults to the current time).
-- `status`: Current status of the payment, stored as an enum. Possible values include: \ **successful**: The payment has been completed successfully. \
-  **canceled** : The payment was canceled before completion. \ **refunded**: The amount was refunded after a successful payment. Defaults to `successful`, but can be changed as the transaction progresses
-  through its lifecycle.
+- `status`: Current status of the payment, stored as an enum. \
+  Possible values include: \
+  - **successful**: The payment has been completed successfully. \
+  - **canceled**: The payment was canceled before completion. \
+  - **refunded**: The amount was refunded after a successful payment. Defaults to `successful`, but can be changed as the transaction progresses through its lifecycle.
   - `amount`: The total amount of the payment (DECIMAL(10,2), not null), ensuring accurate financial records even if the order's pricing changes.
   - `external_payment_id`: An optional string field to store the external transaction ID from the payment provider (e.g., Stripe's charge_id), enabling easy cross-referencing and validation.
 
