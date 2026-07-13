@@ -277,8 +277,8 @@ this module.
 1. **Cart (carts table)** Represents a user's shopping cart. Each user can have exactly one cart. \
    **Attributes**:
 
-- `id`: Primary key (int), auto-incremented. \
-- `user_id`: Foreign key referencing `users.id`, not null and unique, ensuring a one-to-one relationship with the user. \
+- `id`: Primary key (int), auto-incremented.
+- `user_id`: Foreign key referencing `users.id`, not null and unique, ensuring a one-to-one relationship with the user.
 
 **Relationships**:
 
