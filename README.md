@@ -293,19 +293,19 @@ this module.
 2. **CartItem (cart_items table)** Represents a single item (movie) placed in a user's cart. \
    **Attributes**:
 
-- `id`: Primary key (int), auto-incremented. \
-- `cart_id`: Foreign key referencing `carts.id`, not null, indicating which cart the item belongs to. \
-- `movie_id`: Foreign key referencing `movies.id`, not null, indicating which movie is added to the cart. \
-- `added_at`: Timestamp of when the movie was added to the cart, defaults to the current time.
+   - `id`: Primary key (int), auto-incremented. \
+   - `cart_id`: Foreign key referencing `carts.id`, not null, indicating which cart the item belongs to. \
+   - `movie_id`: Foreign key referencing `movies.id`, not null, indicating which movie is added to the cart. \
+   - `added_at`: Timestamp of when the movie was added to the cart, defaults to the current time.
 
-**Relationships**:
+   **Relationships**:
 
-- Many-to-one with `Cart`: Each `CartItem` belongs to exactly one `Cart`. \
-- Optionally, a many-to-one relationship with `Movie` can be defined if needed. Each `CartItem` references exactly one `Movie`.
+   - Many-to-one with `Cart`: Each `CartItem` belongs to exactly one `Cart`. \
+   - Optionally, a many-to-one relationship with `Movie` can be defined if needed. Each `CartItem` references exactly one `Movie`.
 
-**Constraints**:
+   **Constraints**:
 
-- A unique constraint on `(cart_id, movie_id)` ensures that the same movie cannot be added to a single cart more than once.
+   - A unique constraint on `(cart_id, movie_id)` ensures that the same movie cannot be added to a single cart more than once.
 
 **Summary of Relationships**
 
