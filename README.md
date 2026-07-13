@@ -177,7 +177,7 @@ activation. \
 - One-to-many with `Movie`: One certification can be applied to many movies, but each movie has exactly one certification.
 </details>
 
-### 3. **Shopping Cart**
+## 3. **Shopping Cart**
 
 <details>
 
@@ -451,7 +451,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 </details>
 
-### 6. **Docker and Docker Compose**
+## 6. **Docker and Docker Compose**
 
 <details>
 
@@ -465,7 +465,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - **Single Command Setup**: Use a single command to launch all services via Docker Compose for streamlined development and deployment.
 </details>
 
-### 7. **Poetry for Dependency Management**
+## 7. **Poetry for Dependency Management**
 
 <details>
 
@@ -479,7 +479,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Manage virtual environments seamlessly within the development workflow.
 </details>
 
-### 8. **CI/CD with GitHub Actions** \
+## 8. **CI/CD with GitHub Actions**
 
 <details>
 
@@ -496,7 +496,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Automatically deploy the application after passing all checks and merging pull requests to AWS EC2.
 </details>
 
-### 9. **Swagger Documentation Requirements**
+## 9. **Swagger Documentation Requirements**
 
 <details>
 
@@ -508,7 +508,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Restrict access to API documentation, allowing visibility only for authorized users.
 </details>
 
-### 10. Writing Tests
+## 10. Writing Tests
 
 <details>
 
