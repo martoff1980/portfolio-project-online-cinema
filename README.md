@@ -174,9 +174,9 @@ This field is optional.
    - `id`: Primary key (int), auto-incremented.
    - `name`: The director’s name. Must be unique and not null.
 
-**Relationships**:
+   **Relationships**:
 
-- Many-to-many with `Movie` through the `movie_directors` association table. A director can direct multiple movies, and a movie can have multiple directors.
+   - Many-to-many with `Movie` through the `movie_directors` association table. A director can direct multiple movies, and a movie can have multiple directors.
 
 4. **Certification (certifications table)** Represents the rating or certification of a movie (e.g., PG-13, R). \
    **Attributes**:
