@@ -437,7 +437,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - Amount.
 - Status (successful, canceled, refunded).
 
-    **Validation**:
+  - **Validation**:
 
     - Verify the total amount of the order.
     - Check the availability of the selected payment method.
@@ -446,9 +446,9 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
     - Update the order status upon successful payment.
     - If a transaction is declined, display recommendations to the user (e.g., "Try a different payment method").
 
-    **Moderator Functionality**:
+  **Moderator Functionality**:
 
-    - Admins can view a list of all payments with filters for:
+      - Admins can view a list of all payments with filters for:
       - Users.
       - Dates.
       - Statuses (successful, refunded, canceled).
