@@ -5,9 +5,9 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 ## Key Features of Online Cinema
 
-<details>
 1. **Authorization and Authentication**
 
+<details>
 - **User Registration**: \
   Users should be able to register using their email. After registration, an email is sent with a link to activate their account. If the user does not activate their account within 24 hours, the link becomes
   invalid. If the user fails to activate their account within 24 hours, they should have the option to enter their email to receive a new activation link, valid for another 24 hours. Use `celery-beat`
@@ -122,9 +122,9 @@ activation. \
 
 </details>
 
-<details>
 2. **Movies**
 
+<details>
 **User Functionality**:
 
 - Browse the movie catalog with pagination.
