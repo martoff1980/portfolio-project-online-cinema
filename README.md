@@ -149,7 +149,8 @@ This field is optional.
 
 ### Entities and Their Attributes
 
-1. **Genre (genres table)** Represents a movie genre (e.g., Action, Drama, Comedy). \ **Attributes**:
+1. **Genre (genres table)** Represents a movie genre (e.g., Action, Drama, Comedy). \
+   **Attributes**:
 
    - `id`: Primary key (int), auto-incremented.
    - `name`: The genre’s name (e.g., "Action"). Must be unique and not null.
