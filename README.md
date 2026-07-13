@@ -363,8 +363,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ### Entities and Their Attributes
 
-    1.**Order (orders table)** Represents a user's order containing one or more movies. \
-    **Attributes**:
+1.**Order (orders table)** Represents a user's order containing one or more movies. \
+ **Attributes**:
 
     - `id`: Primary key (int, auto-incremented).
     - `user_id`: Foreign key referencing `users.id` (int, not null), indicating which user owns the order.
@@ -387,8 +387,9 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
     - The `status` field allows tracking the lifecycle of the order: pending, then paid, or canceled.
     - The `total_amount` can be checked or updated before finalizing payment, ensuring accurate billing.
 
-    2. **OrderItem (order_items table)** Represents a single line item within an order, linking a specific movie to the order. \
-      **Attributes**:
+2. **OrderItem (order_items table)** Represents a single line item within an order, linking a specific movie to the order. \
+   **Attributes**:
+
 
     - `id`: Primary key (int, auto-incremented).
     - `order_id`: Foreign key referencing orders.id (int, not null), indicating which order this item belongs to.
