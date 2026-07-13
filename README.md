@@ -467,14 +467,14 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
      - **canceled**: The payment was canceled before completion.
      - **refunded**: The amount was refunded after a successful payment. Defaults to `successful`, but can be changed as the transaction progresses through its lifecycle.
 
-- `amount`: The total amount of the payment (DECIMAL(10,2), not null), ensuring accurate financial records even if the order's pricing changes.
-- `external_payment_id`: An optional string field to store the external transaction ID from the payment provider (e.g., Stripe's charge_id), enabling easy cross-referencing and validation.
+   - `amount`: The total amount of the payment (DECIMAL(10,2), not null), ensuring accurate financial records even if the order's pricing changes.
+   - `external_payment_id`: An optional string field to store the external transaction ID from the payment provider (e.g., Stripe's charge_id), enabling easy cross-referencing and validation.
 
-  **Relationships**:
+   **Relationships**:
 
-  - Many-to-one with `User`: Each payment is linked to a specific user.
-  - Many-to-one with `Order`: Each payment is associated with a single order, though an order might have multiple payments if partial or incremental payments are allowed in the future.
-  - One-to-many with `PaymentItem`: A payment can consist of multiple items, each corresponding to a line item in the order.
+- Many-to-one with `User`: Each payment is linked to a specific user.
+- Many-to-one with `Order`: Each payment is associated with a single order, though an order might have multiple payments if partial or incremental payments are allowed in the future.
+- One-to-many with `PaymentItem`: A payment can consist of multiple items, each corresponding to a line item in the order.
 
 **Key Points**:
 
