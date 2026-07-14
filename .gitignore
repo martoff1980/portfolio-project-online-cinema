@@ -1,3 +1,9 @@
 venv/
 
+auth/
+cart/
+movies/
+orders/
+payments/
+
 plain.md

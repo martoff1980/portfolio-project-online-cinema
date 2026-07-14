@@ -3,8 +3,9 @@ import asyncio
 from celery import Celery
 from celery.schedules import crontab
 from sqlalchemy import delete
-from database import async_session_maker # Асинхронный генератор сессий СУБД
-from models import ActivationToken
+# Async generator for database sessions
+from database import async_session_maker 
+from auth.models import ActivationToken
 from datetime import datetime
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
