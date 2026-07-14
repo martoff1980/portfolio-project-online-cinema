@@ -119,7 +119,7 @@ This field is optional.
 - Allow administrators to change a user’s group and manually activate accounts.
 
 **DB schema**\
-![Accounts DB schema](images/structure_db.png)
+![Accounts DB schema](images/structure_auth.png)
 
 </details>
 
@@ -238,7 +238,7 @@ This field is optional.
 
 **DB schema**
 
-![Movies DB schema](Movies DB schema)
+![Movies DB schema](images/structure_movies.png)
 
 </details>
 
@@ -321,7 +321,7 @@ this module.
 
 **DB schema**
 
-- [Cart DB schema](Cart DB schema)
+![Cart DB schema](images/structure_carts.png)
 
 </details>
 
@@ -419,7 +419,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 **DB schema**
 
-- [Order DB schema](Order DB schema)
+![Order DB schema](images/structure_orders.png)
+
 </details>
 
 ## 5. **Payments**
@@ -517,7 +518,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 **DB schema**
 
-![Payment DB schema](Payment DB schema)
+![Payment DB schema](images/structure_payment.png)
 
 </details>
 
