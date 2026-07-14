@@ -2,7 +2,7 @@
 name = "online-cinema-auth"
 version = "0.1.0"
 description = "Online Cinema Authentication Service"
-authors = ["Your Name <you@example.com>"]
+authors = ["Dmytro Breus <you@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
