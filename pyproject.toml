@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "online-cinema"
+name = "src"
 version = "0.1.0"
 description = "FastAPI Online Cinema backend platform with Stripe payments and Celery workers"
 authors = ["Dmytro Breus <you@example.com>"]
