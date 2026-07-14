@@ -4,7 +4,8 @@ from typing import List
 from decimal import Decimal
 from sqlalchemy import Integer, ForeignKey, DateTime, String, Decimal as SQlDecimal, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from models import Base, User, Order, OrderItem  # Импортируем базовые модели
+from src.models.auth import Base, User
+from src.models.orders import Order, OrderItem
 
 class PaymentStatusEnum(str, enum.Enum):
     SUCCESSFUL = "successful"  # Платеж успешно завершен

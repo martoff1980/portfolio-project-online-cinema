@@ -2,8 +2,7 @@ from typing import List, Optional
 from datetime import datetime
 from sqlalchemy import Table, Column, Integer, ForeignKey, String, Float, Decimal, DateTime, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from models import Base, User  # Импортируем базовый класс и модель User из предыдущего шага
-
+from src.models.auth import Base, User
 # --- Ассоциативные таблицы для связей Многие-ко-Многим ---
 
 movie_genres = Table(

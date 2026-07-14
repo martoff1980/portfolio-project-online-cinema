@@ -1,7 +1,9 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey, DateTime, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
-from models import Base, User, Movie  # Импортируем базовые модели
+from typing import List
+from src.models.movies import Movie
+from src.models.auth import Base, User
 
 class Cart(Base):
     __tablename__ = "carts"

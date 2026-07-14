@@ -4,7 +4,8 @@ from typing import List
 from decimal import Decimal
 from sqlalchemy import Integer, ForeignKey, DateTime, String, Decimal as SQlDecimal, Enum as SQLEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from models import Base, User, Movie  # Импортируем базовые модели
+from src.models.movies import  Movie 
+from src.models.auth import Base, User
 
 class OrderStatusEnum(str, enum.Enum):
     PENDING = "pending"   # Заказ создан, ожидает оплаты
