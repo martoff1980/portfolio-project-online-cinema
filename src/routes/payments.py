@@ -5,10 +5,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from database import get_db
-from models import Order, OrderItem, OrderStatusEnum, Payment, PaymentItem, PaymentStatusEnum
-from schemas import PaymentResponse
-from dependencies import get_current_user, allow_admin_only
+from src.database import get_db
+from src.models.orders import Order, OrderItem, OrderStatusEnum
+from src.models.payments import Payment, PaymentItem, PaymentStatusEnum
+from src.schemas.payments import PaymentResponse
+from src.dependencies import get_current_user, allow_admin_only
 
 router = APIRouter(prefix="/payments", tags=["Payments System"])
 

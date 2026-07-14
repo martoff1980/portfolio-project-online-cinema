@@ -1,6 +1,6 @@
-from models import Comment, MovieLike, FavoriteMovie, MovieRating
-from schemas import CommentCreate, CommentResponse, RatingCreate
-from dependencies import get_current_user
+from src.models.movies import Comment, MovieLike, FavoriteMovie, MovieRating
+from src.schemas.movies import CommentCreate, CommentResponse, RatingCreate
+from src.dependencies import get_current_user
 
 # --- Написать коммент к фильму ---
 @router.post("/{movie_id}/comments", response_model=CommentResponse)

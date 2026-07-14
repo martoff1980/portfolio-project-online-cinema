@@ -4,11 +4,13 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from database import get_db
-from models import Cart, CartItem, Order, OrderItem, OrderStatusEnum, Movie
-from schemas import OrderResponse, CheckoutResponse
-from dependencies import get_current_user, allow_admin_only
-from stripe_service import create_payment_session
+from src.database import get_db
+from src.models.cart import Cart, CartItem
+from src.models.orders import Order, OrderItem, OrderStatusEnum
+from src.models.movies import Movie
+from src.schemas.orders import OrderResponse, CheckoutResponse
+from src.dependencies import get_current_user, allow_admin_only
+from src.stripe_service import create_payment_session
 
 router = APIRouter(prefix="/orders", tags=["Orders & Payments"])
 

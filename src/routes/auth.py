@@ -4,13 +4,21 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import get_db  # Предполагается стандартная асинхронная сессия get_db
-from models import User, UserGroup, UserGroupEnum, ActivationToken, PasswordResetToken, RefreshToken, UserProfile
-from schemas import (
+from src.database import get_db
+from src.models.auth import (
+    User,
+    UserGroup,
+    UserGroupEnum,
+    ActivationToken,
+    PasswordResetToken,
+    RefreshToken,
+    UserProfile
+)
+from src.schemas.auth import (
     UserCreate, UserLogin, TokenResponse, RefreshTokenRequest,
     PasswordChange, PasswordResetRequest, PasswordResetConfirm, UserResponse
 )
-from security import (
+from src.security import (
     hash_password, verify_password, validate_password_complexity,
     create_access_token, decode_token
 )

@@ -3,14 +3,12 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from database import get_db
-from models import Cart, CartItem, Movie
-# Импортируем также модели заказов для проверки купленных фильмов (предполагаем их структуру)
-# Подробнее структура Order / OrderItem будет расписана на Шаге 4
-from models import Order, OrderItem, OrderStatusEnum  
-
-from schemas import CartItemAdd, CartResponse
-from dependencies import get_current_user
+from src.database import get_db
+from src.models.cart import Cart, CartItem
+from src.models.movies import Movie
+from src.models.orders import Order, OrderItem, OrderStatusEnum  
+from src.schemas.cart import CartItemAdd, CartResponse
+from src.dependencies import get_current_user
 
 router = APIRouter(prefix="/cart", tags=["Shopping Cart"])
 

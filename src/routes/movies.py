@@ -2,10 +2,12 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from database import get_db
-from models import Movie, Genre, Director, Star, UserGroupEnum
-from schemas import MovieCreate, MovieResponse
-from dependencies import allow_moderator_or_admin
+
+from src.database import get_db
+from src.models.movies import Movie, Genre, Director, Star,
+from src.models.auth import UserGroupEnum
+from src.schemas.movies import MovieCreate, MovieResponse
+from src.dependencies import allow_moderator_or_admin
 
 router = APIRouter(prefix="/movies", tags=["Movies Catalog"])
 
