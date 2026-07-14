@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # 1. Сервис Базы Данных (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: cinema_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Брокер сообщений (Redis)
+  redis:
+    image: redis:7-alpine
+    container_name: cinema_redis
+    restart: always
+    ports:
+      - '6379:6379'
+
+  # 3. Основное FastAPI веб-приложение
+  web:
+    build: .
+    container_name: cinema_web_api
+    restart: always
+    ports:
+      - '8000:8000'
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - STRIPE_API_KEY=${STRIPE_API_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - BASE_URL=${BASE_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    # Команда запуска сервера в режиме отладки/разработки
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # 4. Celery Worker (выполнение фоновых задач)
+  celery_worker:
+    build: .
+    container_name: cinema_celery_worker
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+    command: celery -A tasks.celery_app worker --loglevel=info
+    depends_on:
+      - redis
+      - db
+
+  # 5. Celery Beat (планировщик периодических задач удаления токенов)
+  celery_beat:
+    build: .
+    container_name: cinema_celery_beat
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+    command: celery -A tasks.celery_app beat --loglevel=info
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_data:
