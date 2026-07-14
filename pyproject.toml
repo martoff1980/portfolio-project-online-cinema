@@ -20,6 +20,8 @@ celery = "^5.3.6"
 redis = "^5.0.3"
 stripe = "^8.3.0"
 emails = "^0.6"
+pydantic-settings = "^2.14.2"
+python-jose = "^3.5.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"
