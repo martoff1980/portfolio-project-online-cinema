@@ -7,11 +7,11 @@ pydantic[email]==2.6.4
 pyjwt[crypto]==2.8.0
 passlib[bcrypt]==1.7.4
 python-multipart==0.0.9
+poetry==2.4.1
 celery==5.3.6
 redis==5.0.3
 stripe==8.3.0
 emails==0.6
-# ---------- #
 pytest==8.1.1
 pytest-asyncio==0.23.5
 black==24.2.0
