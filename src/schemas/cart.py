@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional
-from schemas import MovieResponse  # Импортируем схему фильма из Шага 2
+from src.schemas.movies import MovieResponse
 
 class CartItemAdd(BaseModel):
     movie_id: int = Field(..., gt=0)

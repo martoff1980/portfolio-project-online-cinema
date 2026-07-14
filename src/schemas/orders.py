@@ -1,8 +1,8 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import List
-from models import OrderStatusEnum
-from schemas import MovieResponse
+from src.models.orders import OrderStatusEnum
+from src.schemas.movies import MovieResponse
 
 class OrderItemResponse(BaseModel):
     id: int
@@ -27,4 +27,4 @@ class OrderResponse(BaseModel):
 class CheckoutResponse(BaseModel):
     order_id: int
     total_amount: float
-    payment_url: str  # Ссылка на Stripe Checkout сессию или локальную заглушку
+    payment_url: str

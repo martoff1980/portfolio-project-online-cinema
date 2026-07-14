@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import List, Optional
-from models import PaymentStatusEnum
+from src.models.payments import PaymentStatusEnum
 
 class PaymentItemResponse(BaseModel):
     id: int

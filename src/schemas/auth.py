@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
-from models import GenderEnum, UserGroupEnum
+from src.models.auth import GenderEnum, UserGroupEnum
 
 class UserCreate(BaseModel):
     email: EmailStr
