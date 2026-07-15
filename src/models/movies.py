@@ -1,6 +1,6 @@
 from typing import List, Optional
 from datetime import datetime
-from sqlalchemy import Table, Column, Integer, ForeignKey, String, Float, Decimal, DateTime, UniqueConstraint, CheckConstraint
+from sqlalchemy import Table, Column, Integer, ForeignKey, String, Float, Numeric, DateTime, UniqueConstraint, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.auth import Base, User
 # --- Ассоциативные таблицы для связей Многие-ко-Многим ---
@@ -83,7 +83,7 @@ class Movie(Base):
     meta_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     gross: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     description: Mapped[str] = mapped_column(String, nullable=False)
-    price: Mapped[Decimal] = mapped_column(Decimal(10, 2), nullable=False)
+    price: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
     certification_id: Mapped[int] = mapped_column(ForeignKey("certifications.id"), nullable=False)
 
     # Ограничение уникальности на комбинацию (название, год, длительность)

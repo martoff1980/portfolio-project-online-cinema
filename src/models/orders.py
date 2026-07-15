@@ -1,8 +1,14 @@
 import enum
 from datetime import datetime
 from typing import List
-from decimal import Decimal
-from sqlalchemy import Integer, ForeignKey, DateTime, String, Decimal as SQlDecimal, Enum as SQLEnum
+from sqlalchemy import (
+    Integer,
+    ForeignKey,
+    DateTime,
+    String,
+    Numeric,
+    Enum as SQLEnum
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.movies import  Movie 
 from src.models.auth import Base, User
@@ -21,7 +27,7 @@ class Order(Base):
     status: Mapped[OrderStatusEnum] = mapped_column(
         SQLEnum(OrderStatusEnum), default=OrderStatusEnum.PENDING, nullable=False
     )
-    total_amount: Mapped[Decimal] = mapped_column(SQlDecimal(10, 2), nullable=False)
+    total_amount: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
 
     # Отношения
     user: Mapped["User"] = relationship()
@@ -34,7 +40,7 @@ class OrderItem(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     order_id: Mapped[int] = mapped_column(ForeignKey("orders.id", ondelete="CASCADE"), nullable=False)
     movie_id: Mapped[int] = mapped_column(ForeignKey("movies.id", ondelete="CASCADE"), nullable=False)
-    price_at_order: Mapped[Decimal] = mapped_column(SQlDecimal(10, 2), nullable=False)  # Фиксация цены
+    price_at_order: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)  # Фиксация цены
 
     # Отношения
     order: Mapped["Order"] = relationship("Order", back_populates="items")

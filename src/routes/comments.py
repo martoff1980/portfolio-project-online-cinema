@@ -1,6 +1,13 @@
-from src.models.movies import Comment, MovieLike, FavoriteMovie, MovieRating
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
+
+from src.models.movies import Comment, Movie, MovieLike, FavoriteMovie, MovieRating
 from src.schemas.movies import CommentCreate, CommentResponse, RatingCreate
 from src.dependencies import get_current_user
+from src.database import get_db
+
+router = APIRouter()
 
 # --- Написать коммент к фильму ---
 @router.post("/{movie_id}/comments", response_model=CommentResponse)

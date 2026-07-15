@@ -1,7 +1,8 @@
 import os
 import stripe
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Header, Request, status
-from sqlalchemy import select
+from sqlalchemy import select, Numeric
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -45,7 +46,7 @@ async def stripe_webhook(
         
         order_id = int(session["metadata"]["order_id"])
         external_payment_id = session["id"]
-        amount_paid = Decimal(session["amount_total"]) / 100  # Переводим центы в доллары
+        amount_paid = Numeric(session["amount_total"]) / 100  # Переводим центы в доллары
 
         # 1. Ищем заказ в БД
         stmt = select(Order).where(Order.id == order_id).options(selectinload(Order.items))
