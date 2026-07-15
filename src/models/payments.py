@@ -2,7 +2,14 @@ import enum
 from datetime import datetime
 from typing import List, Optional
 from decimal import Decimal
-from sqlalchemy import Integer, ForeignKey, DateTime, String, Decimal as SQlDecimal, Enum as SQLEnum
+from sqlalchemy import (
+    Integer,
+    ForeignKey,
+    DateTime,
+    String,
+    Numeric,
+    Enum as SQLEnum
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.auth import Base, User
 from src.models.orders import Order, OrderItem
@@ -22,7 +29,7 @@ class Payment(Base):
     status: Mapped[PaymentStatusEnum] = mapped_column(
         SQLEnum(PaymentStatusEnum), default=PaymentStatusEnum.SUCCESSFUL, nullable=False
     )
-    amount: Mapped[Decimal] = mapped_column(SQlDecimal(10, 2), nullable=False)  # Итоговая сумма транзакции
+    amount: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)  # Итоговая сумма транзакции
     external_payment_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)  # ID сессии или транзакции в Stripe
 
     # Отношения
@@ -37,7 +44,7 @@ class PaymentItem(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     payment_id: Mapped[int] = mapped_column(ForeignKey("payments.id", ondelete="CASCADE"), nullable=False)
     order_item_id: Mapped[int] = mapped_column(ForeignKey("order_items.id", ondelete="CASCADE"), nullable=False)
-    price_at_payment: Mapped[Decimal] = mapped_column(SQlDecimal(10, 2), nullable=False)  # Фиксация цены в чеке
+    price_at_payment: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)  # Фиксация цены в чеке
 
     # Отношения
     payment: Mapped["Payment"] = relationship("Payment", back_populates="items")

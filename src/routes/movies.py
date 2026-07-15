@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_db
-from src.models.movies import Movie, Genre, Director, Star,
+from src.models.movies import Movie, Genre, Director, Star
 from src.models.auth import UserGroupEnum
 from src.schemas.movies import MovieCreate, MovieResponse
 from src.dependencies import allow_moderator_or_admin
