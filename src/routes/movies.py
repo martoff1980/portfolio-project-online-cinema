@@ -11,6 +11,20 @@ from src.dependencies import allow_moderator_or_admin
 
 router = APIRouter(prefix="/movies", tags=["Movies Catalog"])
 
+@router.post(
+    "/", 
+    response_model=MovieResponse, 
+    status_code=status.HTTP_201_CREATED,
+    summary="Добавить новый фильм в каталог",
+    description="Позволяет модераторам и администраторам добавлять новые фильмы. "
+                "Проверяет уникальность комбинации названия, года выпуска и длительности фильма.",
+    responses={
+        201: {"description": "Фильм успешно создан."},
+        400: {"description": "Фильм с такими параметрами уже существует в базе данных."},
+        401: {"description": "Пользователь не авторизован (невалидный токен)."},
+        403: {"description": "Недостаточно прав (доступно только MODERATOR/ADMIN)."}
+    }
+)
 @router.post("/", response_model=MovieResponse, status_code=status.HTTP_201_CREATED)
 async def create_movie(
     payload: MovieCreate,
