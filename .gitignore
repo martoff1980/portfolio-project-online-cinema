@@ -7,4 +7,6 @@ orders/
 payments/
 archive/
 
+.coverage
+
 plain.md

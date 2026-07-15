@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
@@ -41,14 +42,19 @@ app.include_router(orders_router)
 app.include_router(payments_router)
 
 # Инициализируем схему Basic Auth для защиты Swagger
-security = HTTPBasic()
+security = HTTPBasic(auto_error=False) 
 
+DOCS_USERNAME = os.getenv("DOCS_USERNAME")
+DOCS_PASSWORD = os.getenv("DOCS_PASSWORD")
 
-def verify_docs_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+def verify_docs_credentials(
+    credentials: HTTPBasicCredentials | None = Depends(security)
+):
     """
     Проверяет логин и пароль для доступа к интерактивной документации.
     """
     if (
+        credentials is None or
         credentials.username != settings.DOCS_USERNAME or 
         credentials.password != settings.DOCS_PASSWORD
     ):
