@@ -47,7 +47,7 @@ services:
       redis:
         condition: service_started
     # Команда запуска сервера в режиме отладки/разработки
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
   # 4. Celery Worker (выполнение фоновых задач)
   celery_worker:
@@ -57,7 +57,8 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
-    command: celery -A tasks.celery_app worker --loglevel=info
+      - PYTHONPATH=/app/src
+    command: celery -A src.tasks.celery_app worker --loglevel=info
     depends_on:
       - redis
       - db
@@ -70,7 +71,8 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
-    command: celery -A tasks.celery_app beat --loglevel=info
+      - PYTHONPATH=/app/src
+    command: celery -A src.tasks.celery_app beat --loglevel=info
     depends_on:
       - redis
       - db

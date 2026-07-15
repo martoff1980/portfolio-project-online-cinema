@@ -9,11 +9,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Установка переменной окружения для Poetry
-ENV POETRY_VERSION=1.7.1 \
+ENV POETRY_VERSION=2.4.1 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
-    PATH="$POETRY_HOME/bin:$PATH" \
     PYTHONUNBUFFERED=1
+
+
+# Добавляем путь к бинарникам Poetry в системный PATH
+ENV PATH="$POETRY_HOME/bin:$PATH"
 
 # Установка Poetry через официальный скрипт
 RUN curl -sSL https://install.python-poetry.org | python3 -
