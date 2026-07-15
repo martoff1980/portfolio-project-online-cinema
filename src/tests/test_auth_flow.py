@@ -1,9 +1,11 @@
 import pytest
+import pytest_asyncio
 from httpx import AsyncClient
 from sqlalchemy import select
 from src.models.auth import ActivationToken, User
 
-@pytest.mark.asyncio
+@pytest.fixture
+# @pytest_asyncio.fixture(scope="function")
 async def test_full_auth_and_activation_flow(ac: AsyncClient, db_session):
     # 1. Регистрация нового пользователя
     reg_payload = {

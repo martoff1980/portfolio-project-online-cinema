@@ -1,9 +1,11 @@
 import pytest
+import pytest_asyncio
 from httpx import AsyncClient
 from src.models.movies import Movie
 from src.models.orders import Order, OrderItem, OrderStatusEnum
 
-@pytest.mark.asyncio
+@pytest.fixture
+# @pytest_asyncio.fixture(scope="function")
 async def test_checkout_already_purchased_movie_raises_error(ac: AsyncClient, db_session):
     # 1. Создаем пользователя и делаем его активным
     # ... (код создания тестового юзера с авторизацией)
