@@ -1,5 +1,6 @@
 venv/
 
+.pytest_cache/
 src/__pycache__/
 src/models/__pycache__/
 src/routes/__pycache__/
