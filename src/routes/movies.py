@@ -15,23 +15,24 @@ router = APIRouter(prefix="/movies", tags=["Movies Catalog"])
     "/", 
     response_model=MovieResponse, 
     status_code=status.HTTP_201_CREATED,
-    summary="Добавить новый фильм в каталог",
-    description="Позволяет модераторам и администраторам добавлять новые фильмы. "
-                "Проверяет уникальность комбинации названия, года выпуска и длительности фильма.",
+    summary="Add a new movie to the catalog",
+    description="Allows moderators and administrators to add new movies. "
+                "Checks the uniqueness of the combination of the film's title, release year, and duration.",
     responses={
-        201: {"description": "Фильм успешно создан."},
-        400: {"description": "Фильм с такими параметрами уже существует в базе данных."},
-        401: {"description": "Пользователь не авторизован (невалидный токен)."},
-        403: {"description": "Недостаточно прав (доступно только MODERATOR/ADMIN)."}
+        201: {"description": "The film has been successfully created."},
+        400: {"description": "A film with these parameters already exists in the database."},
+        401: {"description": "User not authorized (invalid token)."},
+        403: {"description": "Insufficient permissions (available only to MODERATOR/ADMIN)."}
     }
 )
 @router.post("/", response_model=MovieResponse, status_code=status.HTTP_201_CREATED)
 async def create_movie(
     payload: MovieCreate,
     db: AsyncSession = Depends(get_db),
-    current_user = Depends(allow_moderator_or_admin)  # Только Модератор или Админ
+    current_user = Depends(allow_moderator_or_admin)
 ):
-    # Проверяем уникальность по (name, year, time)
+    # Check if a movie with the same
+    # name, year, and time already exists
     stmt = select(Movie).where(
         Movie.name == payload.name,
         Movie.year == payload.year,
@@ -44,7 +45,7 @@ async def create_movie(
             detail="Movie with this title, year and duration already exists."
         )
 
-    # Создаем объект фильма
+    # Create a new movie
     new_movie = Movie(
         uuid=str(uuid.uuid4()),
         name=payload.name,
@@ -56,7 +57,7 @@ async def create_movie(
         certification_id=payload.certification_id
     )
 
-    # Навешиваем связи (Жанры, Директора, Актеры)
+    # link genres, directors, and stars if their IDs are provided in the payload
     if payload.genre_ids:
         genres_db = await db.execute(select(Genre).where(Genre.id.in_(payload.genre_ids)))
         new_movie.genres = list(genres_db.scalars().all())
@@ -84,13 +85,6 @@ async def delete_movie(
     movie = await db.get(Movie, movie_id)
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found.")
-
-    # Проверка бизнес-логики: Запретить удаление, если фильм куплен хотя бы одним юзером.
-    # (Эта часть будет полностью увязана на Шаге 4, когда появится таблица Order/OrderItem)
-    # Псевдокод проверки:
-    # is_purchased = await db.execute(select(OrderItem).where(OrderItem.movie_id == movie_id))
-    # if is_purchased.first():
-    #     raise HTTPException(status_code=400, detail="Cannot delete movie: it has already been purchased.")
 
     await db.delete(movie)
     await db.commit()

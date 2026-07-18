@@ -15,7 +15,9 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.models.auth import Base, User
-# --- Ассоциативные таблицы для связей Многие-ко-Многим ---
+
+# Asociative tables for Many-to-Many relationships between
+# movies and genres, directors, and stars.
 
 movie_genres = Table(
     "movie_genres",
@@ -38,8 +40,7 @@ movie_stars = Table(
     Column("star_id", Integer, ForeignKey("stars.id", ondelete="CASCADE"), primary_key=True),
 )
 
-# --- Основные сущности ---
-
+# Main entities: Genre, Star, Director, Certification, Movie
 class Genre(Base):
     __tablename__ = "genres"
 
@@ -98,12 +99,12 @@ class Movie(Base):
     price: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
     certification_id: Mapped[int] = mapped_column(ForeignKey("certifications.id"), nullable=False)
 
-    # Ограничение уникальности на комбинацию (название, год, длительность)
+    # Uniqueness constraint on the combination of (name, year, time)
     __table_args__ = (
         UniqueConstraint("name", "year", "time", name="uq_movie_name_year_time"),
     )
 
-    # Отношения
+    # relationships
     certification: Mapped["Certification"] = relationship("Certification", back_populates="movies")
     genres: Mapped[List["Genre"]] = relationship("Genre", secondary=movie_genres, back_populates="movies")
     directors: Mapped[List["Director"]] = relationship("Director", secondary=movie_directors, back_populates="movies")
@@ -115,8 +116,7 @@ class Movie(Base):
     favorites: Mapped[List["FavoriteMovie"]] = relationship("FavoriteMovie", back_populates="movie", cascade="all, delete-orphan")
 
 
-# --- Новые сущности: Лайки, Избранное, Комментарии, Рейтинги ---
-
+# New entities: Likes, Favorites, Comments, Ratings
 class MovieLike(Base):
     __tablename__ = "movie_likes"
 
