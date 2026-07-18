@@ -70,7 +70,8 @@ async def add_item_to_cart(
         .join(Order)
         .where(
             Order.user_id == user.id,
-            Order.status == "PAID",  # ИЛИ OrderStatusEnum.PAID
+            # Alternative OrderStatusEnum.PAID
+            Order.status == "PAID",
             OrderItem.movie_id == payload.movie_id,
         )
     )
@@ -111,7 +112,7 @@ async def remove_item_from_cart(
 ):
     cart = await get_or_create_cart(user.id, db)
 
-    # Ищем элемент в корзине
+    # Search for the item in the cart
     item_to_remove = None
     for item in cart.items:
         if item.movie_id == movie_id:
