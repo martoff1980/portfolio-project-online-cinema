@@ -14,7 +14,7 @@ router = APIRouter(prefix="/cart", tags=["Shopping Cart"])
 
 
 async def get_or_create_cart(user_id: int, db: AsyncSession) -> Cart:
-    """Вспомогательная функция получения или создания корзины пользователя."""
+    """Helper function to retrieve or create a user's shopping cart."""
     stmt = (
         select(Cart)
         .where(Cart.user_id == user_id)
@@ -27,7 +27,7 @@ async def get_or_create_cart(user_id: int, db: AsyncSession) -> Cart:
         cart = Cart(user_id=user_id)
         db.add(cart)
         await db.commit()
-        # Загружаем заново со связями
+        # Load the cart again to include the items relationship
         result = await db.execute(stmt)
         cart = result.scalars().first()
 
@@ -41,7 +41,7 @@ async def get_cart(
 ):
     cart = await get_or_create_cart(user.id, db)
 
-    # Считаем сумму цен всех фильмов в корзине
+    # Count summation of the prices of all movies in the cart
     total_price = sum(float(item.movie.price) for item in cart.items)
 
     return {
@@ -58,13 +58,13 @@ async def add_item_to_cart(
     db: AsyncSession = Depends(get_db),
     user=Depends(get_current_user),
 ):
-    # 1. Проверяем, существует ли фильм вообще
+    # Check if the movie exists in the database
     movie = await db.get(Movie, payload.movie_id)
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found.")
 
-    # 2. Проверяем, не купил ли пользователь этот фильм ранее (Бизнес-правило!)
-    # Ищем оплаченные (PAID) заказы пользователя, в которых есть этот фильм
+    # Chech if the user has already purchased this movie
+    # Search for paid orders of the user that contain this movie
     purchased_stmt = (
         select(OrderItem)
         .join(Order)
@@ -82,10 +82,10 @@ async def add_item_to_cart(
                    "No need to add it to the cart.",
         )
 
-    # 3. Получаем корзину
+    # Get cart
     cart = await get_or_create_cart(user.id, db)
 
-    # 4. Проверяем, нет ли уже этого фильма в корзине
+    # Check if the movie is already in the cart
     for item in cart.items:
         if item.movie_id == payload.movie_id:
             raise HTTPException(
@@ -93,7 +93,7 @@ async def add_item_to_cart(
                 detail="This movie is already in your cart.",
             )
 
-    # 5. Добавляем в корзину
+    # add the movie to the cart
     new_item = CartItem(cart_id=cart.id, movie_id=payload.movie_id)
     db.add(new_item)
     await db.commit()
