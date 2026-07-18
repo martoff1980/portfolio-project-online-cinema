@@ -1,8 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from datetime import datetime
 from typing import List
 from src.models.orders import OrderStatusEnum
 from src.schemas.movies import MovieResponse
+
 
 class OrderItemResponse(BaseModel):
     id: int
@@ -12,6 +13,7 @@ class OrderItemResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class OrderResponse(BaseModel):
     id: int
@@ -23,6 +25,7 @@ class OrderResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class CheckoutResponse(BaseModel):
     order_id: int
