@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import List, Optional
 from src.models.payments import PaymentStatusEnum
 
+
 class PaymentItemResponse(BaseModel):
     id: int
     order_item_id: int
@@ -10,6 +11,7 @@ class PaymentItemResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class PaymentResponse(BaseModel):
     id: int
