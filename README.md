@@ -425,7 +425,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ## 5. **Payments**
 
-<details>
+<!-- <details> -->
 
 - **User Functionality**:
 
@@ -520,7 +520,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ![Payment DB schema](images/structure_payment.png)
 
-</details>
+<!-- </details> -->
 
 ## 6. **Docker and Docker Compose**
 
