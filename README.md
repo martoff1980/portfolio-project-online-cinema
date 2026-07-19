@@ -125,7 +125,7 @@ This field is optional.
 
 ## 2. **Movies**
 
-<details>
+<!-- <details> -->
 
 **User Functionality**:
 
@@ -240,7 +240,7 @@ This field is optional.
 
 ![Movies DB schema](images/structure_movies.png)
 
-</details>
+<!-- </details> -->
 
 ## 3. **Shopping Cart**
 
