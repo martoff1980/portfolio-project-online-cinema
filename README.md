@@ -327,7 +327,7 @@ this module.
 
 ## 4. **Order**
 
-<details>
+<!-- <details> -->
 
 - **User Functionality**:
 
@@ -421,7 +421,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ![Order DB schema](images/structure_orders.png)
 
-</details>
+<!-- </details> -->
 
 ## 5. **Payments**
 
