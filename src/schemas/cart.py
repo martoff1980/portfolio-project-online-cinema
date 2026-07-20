@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 from src.schemas.movies import MovieResponse
 
@@ -8,14 +8,18 @@ class CartItemAdd(BaseModel):
 
 
 class CartItemResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     movie: MovieResponse
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class CartResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     user_id: int
     items: List[CartItemResponse]
@@ -24,5 +28,5 @@ class CartResponse(BaseModel):
         description="Total cost of all movies in the cart"
     )
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True

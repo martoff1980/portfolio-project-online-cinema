@@ -1,30 +1,36 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
 from datetime import datetime
 
 
 class GenreSchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     name: str
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class StarSchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     name: str
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class DirectorSchema(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     name: str
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class MovieCreate(BaseModel):
@@ -41,6 +47,8 @@ class MovieCreate(BaseModel):
 
 
 class MovieResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     uuid: str
     name: str
@@ -54,8 +62,8 @@ class MovieResponse(BaseModel):
     directors: List[DirectorSchema]
     stars: List[StarSchema]
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class CommentCreate(BaseModel):
@@ -64,6 +72,8 @@ class CommentCreate(BaseModel):
 
 
 class CommentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     user_id: int
     movie_id: int
@@ -71,8 +81,8 @@ class CommentResponse(BaseModel):
     parent_id: Optional[int]
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class RatingCreate(BaseModel):

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import List
 from src.models.orders import OrderStatusEnum
@@ -6,16 +6,20 @@ from src.schemas.movies import MovieResponse
 
 
 class OrderItemResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     movie_id: int
     price_at_order: float
     movie: MovieResponse
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class OrderResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     user_id: int
     created_at: datetime
@@ -23,8 +27,8 @@ class OrderResponse(BaseModel):
     total_amount: float
     items: List[OrderItemResponse]
 
-    class Config:
-        from_attributes = True
+    # class Config:
+    #     from_attributes = True
 
 
 class CheckoutResponse(BaseModel):
