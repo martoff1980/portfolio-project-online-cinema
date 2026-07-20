@@ -142,12 +142,16 @@ class Movie(Base):
     )
     uuid: Mapped[str] = mapped_column(
         String, unique=True, nullable=False
-    )  # Генерируется на уровне приложения/БД
+    )
+    # Generating a UUID for each movie ensures that even
+    # if the movie's name changes,
+    # it can still be uniquely identified.
     name: Mapped[str] = mapped_column(String, nullable=False)
     year: Mapped[int] = mapped_column(Integer, nullable=False)
+    # Duration in minutes
     time: Mapped[int] = mapped_column(
         Integer, nullable=False
-    )  # Продолжительность в минутах
+    )
     imdb: Mapped[float] = mapped_column(Float, nullable=False)
     votes: Mapped[int] = mapped_column(Integer, default=0)
     meta_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
