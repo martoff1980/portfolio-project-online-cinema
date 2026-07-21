@@ -1,37 +1,41 @@
-import asyncio
-import pytest
 import pytest_asyncio
 from typing import AsyncGenerator
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from sqlalchemy.ext.asyncio import (
+    create_async_engine,
+    AsyncSession,
+    async_sessionmaker
+)
 from httpx import AsyncClient
 
 from src.main import app
 from src.database import get_db
 from src.models.auth import Base, UserGroup, UserGroupEnum
 
-# Тестовая база данных (внутри контейнера или локальная)
-TEST_DATABASE_URL = "postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db"
+# Test db (inside container)
+TEST_DATABASE_URL = (
+    "postgresql+asyncpg://"
+    "cinema_test_user:cinema_test_pass"
+    "@db:5432/online_cinema_test_db"
+)
 
 engine_test = create_async_engine(TEST_DATABASE_URL, echo=False)
-async_session_maker = async_sessionmaker(engine_test, expire_on_commit=False, class_=AsyncSession)
+async_session_maker = async_sessionmaker(
+    engine_test,
+    expire_on_commit=False,
+    class_=AsyncSession
+)
 
-@pytest.fixture(scope="session")
-# @pytest_asyncio.fixture(scope="function")
-def event_loop():
-    """Создает экземпляр event loop для всей тестовой сессии."""
-    policy = asyncio.get_event_loop_policy()
-    loop = policy.new_event_loop()
-    yield loop
-    loop.close()
 
-@pytest.fixture(scope="session", autouse=True)
-# @pytest_asyncio.fixture(scope="function", autouse=True)
+@pytest_asyncio.fixture(scope="function", autouse=True)
 async def prepare_database():
-    """Автоматически создает таблицы перед тестами и удаляет после."""
+    """
+    Automatically creates tables before tests and deletes them afterwards.
+    """
     async with engine_test.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
-    
-    # Наполняем дефолтными ролями
+
+    # Default roles: ADMIN, USER, GUEST
     async with async_session_maker() as session:
         for role in UserGroupEnum:
             group = UserGroup(name=role)
@@ -39,25 +43,44 @@ async def prepare_database():
         await session.commit()
 
     yield
-    
+
     async with engine_test.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
 
-@pytest.fixture
-# @pytest_asyncio.fixture(scope="function")
+    # Close all connections in the connection pool
+    await engine_test.dispose()
+
+
+@pytest_asyncio.fixture(scope="function")
 async def db_session() -> AsyncGenerator[AsyncSession, None]:
-    """Фикстура для получения изолированной сессии БД в каждом тесте."""
-    async with async_session_maker() as session:
-        yield session
+    """
+    A fixture for obtaining an isolated database session in each test.
+    """
+    connection = await engine_test.connect()
+    transaction = await connection.begin()
 
-@pytest.fixture
-# @pytest_asyncio.fixture(scope="function")
+    session = AsyncSession(bind=connection, expire_on_commit=False)
+
+    yield session
+
+    await session.close()
+    await transaction.rollback()
+    await connection.close()
+
+
+@pytest_asyncio.fixture(scope="function")
 async def ac(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
-    """Асинхронный HTTP-клиент, подменяющий реальную сессию БД на тестовую."""
-    def _get_test_db():
-        return db_session
+    """
+    An asynchronous HTTP client that swaps the real database session
+    for a test session.
+    """
+    # We redefine get_db so that it returns the same db_session
+    # as the one used in the test.
+    async def _override_get_db():
+        yield db_session
 
-    app.dependency_overrides[get_db] = _get_test_db
+    app.dependency_overrides[get_db] = _override_get_db
+
     async with AsyncClient(app=app, base_url="http://test") as client:
         yield client
     app.dependency_overrides.clear()
