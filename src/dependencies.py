@@ -9,8 +9,9 @@ from src.security import decode_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
+
 async def get_current_user(
-    token: str = Depends(oauth2_scheme), 
+    token: str = Depends(oauth2_scheme),
     db: AsyncSession = Depends(get_db)
 ) -> User:
     payload = decode_token(token)
@@ -20,7 +21,7 @@ async def get_current_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token invalid: missing user identifier."
         )
-    
+
     result = await db.execute(
         select(User).where(User.id == int(user_id_str))
     )
@@ -43,23 +44,28 @@ class RoleChecker:
         self.allowed_roles = allowed_roles
 
     async def __call__(
-        self, 
-        current_user: User = Depends(get_current_user), 
+        self,
+        current_user: User = Depends(get_current_user),
         db: AsyncSession = Depends(get_db)
     ) -> User:
-        # Загружаем имя группы пользователя
+        # Load the user's group name
         result = await db.execute(
             select(UserGroup).where(UserGroup.id == current_user.group_id)
         )
         group = result.scalars().first()
-        
+
         if not group or group.name not in self.allowed_roles:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="You do not have enough permissions to perform this action."
+                detail="You do not have enough permissions "
+                       "to perform this action."
             )
         return current_user
 
-# Быстрые алиасы для ролей
-allow_moderator_or_admin = RoleChecker([UserGroupEnum.MODERATOR, UserGroupEnum.ADMIN])
+
+# Aliases for role checkers
+allow_moderator_or_admin = RoleChecker(
+    [UserGroupEnum.MODERATOR,
+     UserGroupEnum.ADMIN]
+)
 allow_admin_only = RoleChecker([UserGroupEnum.ADMIN])
