@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # 1. Сервис Базы Данных (PostgreSQL)
+  # DB Service (PostgreSQL)
   db:
     image: postgres:15-alpine
     container_name: cinema_db
@@ -30,7 +30,7 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
 
-  # 2. Брокер сообщений (Redis)
+  # Broker for messaging and caching
   redis:
     image: redis:7-alpine
     container_name: cinema_redis
@@ -38,7 +38,7 @@ services:
     ports:
       - '6379:6379'
 
-  # 3. Основное FastAPI веб-приложение
+  # Main FastAPI web application
   web:
     build: .
     container_name: cinema_web_api
@@ -58,10 +58,10 @@ services:
         condition: service_started
       migrate:
         condition: service_completed_successfully
-    # Команда запуска сервера в режиме отладки/разработки
+    # Start the FastAPI application using Uvicorn with hot-reloading enabled for development.
     command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
-  # 4. Celery Worker (выполнение фоновых задач)
+  # used by Celery for task queue management.
   celery_worker:
     build: .
     container_name: cinema_celery_worker
@@ -75,7 +75,8 @@ services:
       - redis
       - db
 
-  # 5. Celery Beat (планировщик периодических задач удаления токенов)
+  # Celery Beat is a scheduler that kicks off tasks at regular intervals,
+  # which are then executed by available worker nodes in the cluster. In this case, it is used to schedule periodic tasks for deleting tokens.
   celery_beat:
     build: .
     container_name: cinema_celery_beat

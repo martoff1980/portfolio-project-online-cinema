@@ -1,42 +1,43 @@
-# Ипользуем официальный образ Python
+# Use the official Python image as a base image
 FROM python:3.11-slim
 
-# Установка системных зависимостей для сборки некоторых Python-пакетов
+# Install system dependencies for building some Python packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Установка переменной окружения для Poetry
+# Install Poetry and configure it to not create virtual environments
 ENV POETRY_VERSION=2.4.1 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
     PYTHONUNBUFFERED=1
 
 
-# Добавляем путь к бинарникам Poetry в системный PATH
+# Add Poetry's bin directory to the system PATH
 ENV PATH="$POETRY_HOME/bin:$PATH"
 
-# Установка Poetry через официальный скрипт
+# Install Poetry using the official installation script
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# Рабочая директория внутри контейнера
+# Working directory inside the container
 WORKDIR /app
 
-# Копируем файлы конфигурации зависимостей
+# Copy only the dependency files to leverage Docker cache
 COPY pyproject.toml poetry.lock* ./
 
-# Устанавливаем зависимости без разработки (без dev-зависимостей)
+# Install dependencies without dev-dependencies
 RUN poetry install --no-interaction --no-ansi --no-root
 
-# Копируем исходный код приложения
+# Copy the entire application code into the container
 COPY . .
 
+# Set the PYTHONPATH environment variable to include the application directory
 ENV PYTHONPATH=/app
 
-# Открываем порт для FastAPI
+# Set the port that the application will run on
 EXPOSE 8000
 
-# Команда по умолчанию (будет переопределяться в docker-compose под каждый сервис)
+# Srart the FastAPI application using Uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
