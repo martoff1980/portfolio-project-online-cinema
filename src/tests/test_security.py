@@ -6,6 +6,7 @@ from src.security import (
     validate_password_complexity
 )
 
+
 def test_password_hashing():
     password = "SecretPassword123"
     hashed = hash_password(password)
@@ -13,15 +14,18 @@ def test_password_hashing():
     assert verify_password(password, hashed) is True
     assert verify_password("WrongPassword", hashed) is False
 
+
 def test_password_complexity_valid():
-    # Валидный пароль не должен выбрасывать исключений
+    # Valid password: at least 8 characters,
+    # includes uppercase, lowercase, and digits
     assert validate_password_complexity("ValidPass123") is None
 
+
 @pytest.mark.parametrize("invalid_password", [
-    "short1",         # Слишком короткий
-    "notuppercase1",  # Нет заглавной буквы
-    "NOTLOWERCASE1",  # Нет строчной буквы
-    "NoDigitsPass",   # Нет цифр
+    "short1",
+    "notuppercase1",
+    "NOTLOWERCASE1",
+    "NoDigitsPass",
 ])
 def test_password_complexity_invalid(invalid_password):
     with pytest.raises(HTTPException) as exc_info:
