@@ -7,15 +7,15 @@ from sqlalchemy.ext.asyncio import (
 from sqlalchemy.orm import DeclarativeBase
 from src.config import settings
 
-# 1. Создаем асинхронный движок для работы с PostgreSQL через asyncpg
+# Creating an asynchronous engine for working with PostgreSQL via asyncpg
 DATABASE_URL = settings.get_database_url()
 engine = create_async_engine(
     DATABASE_URL,
-    echo=False,  # Измени на True, если нужно видеть генерируемые SQL-запросы в консоли
+    echo=False,
     future=True
 )
 
-# 2. Создаем фабрику асинхронных сессий
+# Create factory for asynchronous sessions
 AsyncSessionLocal = async_sessionmaker(
     bind=engine,
     class_=AsyncSession,
@@ -25,12 +25,12 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 
-# 3. Базовый декларативный класс для всех моделей SQLAlchemy
+# Base class for SQLAlchemy models
 class Base(DeclarativeBase):
     pass
 
 
-# 4. Dependency Injection для FastAPI, предоставляющий сессию БД на каждый запрос
+# Dependency Injection for FastAPI, wich get database session for each request
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     async with AsyncSessionLocal() as session:
         try:
