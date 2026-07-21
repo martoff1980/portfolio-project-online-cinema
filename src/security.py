@@ -5,19 +5,23 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 from fastapi import HTTPException, status
 
+from src.config import settings
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Настройки для разработки (в продакшене перенести в .env через Pydantic Settings)
-SECRET_KEY = "SUPER_SECRET_KEY_CINEMA"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 15
-REFRESH_TOKEN_EXPIRE_DAYS = 30
+SECRET_KEY = settings.SECRET_KEY
+ALGORITHM = settings.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
+REFRESH_TOKEN_EXPIRE_DAYS = settings.REFRESH_TOKEN_EXPIRE_DAYS
+
 
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
+
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
+
 
 def validate_password_complexity(password: str) -> None:
     if len(password) < 8:
@@ -41,14 +45,19 @@ def validate_password_complexity(password: str) -> None:
             detail="Password must contain at least one digit."
         )
 
+
 def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        expire = (
+            datetime.utcnow() +
+            timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
     to_encode.update({"exp": expire, "type": "access"})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
 
 def decode_token(token: str) -> Dict[str, Any]:
     try:
