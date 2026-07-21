@@ -33,6 +33,8 @@ RUN poetry install --no-interaction --no-ansi --no-root
 # Копируем исходный код приложения
 COPY . .
 
+ENV PYTHONPATH=/app
+
 # Открываем порт для FastAPI
 EXPOSE 8000
 
