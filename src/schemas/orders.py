@@ -13,9 +13,6 @@ class OrderItemResponse(BaseModel):
     price_at_order: float
     movie: MovieResponse
 
-    # class Config:
-    #     from_attributes = True
-
 
 class OrderResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -26,9 +23,6 @@ class OrderResponse(BaseModel):
     status: OrderStatusEnum
     total_amount: float
     items: List[OrderItemResponse]
-
-    # class Config:
-    #     from_attributes = True
 
 
 class CheckoutResponse(BaseModel):

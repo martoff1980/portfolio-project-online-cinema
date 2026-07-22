@@ -13,9 +13,6 @@ class CartItemResponse(BaseModel):
     id: int
     movie: MovieResponse
 
-    # class Config:
-    #     from_attributes = True
-
 
 class CartResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -27,6 +24,3 @@ class CartResponse(BaseModel):
         0.0,
         description="Total cost of all movies in the cart"
     )
-
-    # class Config:
-    #     from_attributes = True

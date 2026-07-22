@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from src.models.auth import GenderEnum
 
 
@@ -47,11 +47,10 @@ class ProfileUpdate(BaseModel):
 
 
 class UserResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     email: EmailStr
     is_active: bool
     group_id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True

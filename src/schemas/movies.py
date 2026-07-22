@@ -9,9 +9,6 @@ class GenreSchema(BaseModel):
     id: int
     name: str
 
-    # class Config:
-    #     from_attributes = True
-
 
 class StarSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -19,18 +16,12 @@ class StarSchema(BaseModel):
     id: int
     name: str
 
-    # class Config:
-    #     from_attributes = True
-
 
 class DirectorSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
     name: str
-
-    # class Config:
-    #     from_attributes = True
 
 
 class MovieCreate(BaseModel):
@@ -62,9 +53,6 @@ class MovieResponse(BaseModel):
     directors: List[DirectorSchema]
     stars: List[StarSchema]
 
-    # class Config:
-    #     from_attributes = True
-
 
 class CommentCreate(BaseModel):
     text: str = Field(..., min_length=1)
@@ -80,9 +68,6 @@ class CommentResponse(BaseModel):
     text: str
     parent_id: Optional[int]
     created_at: datetime
-
-    # class Config:
-    #     from_attributes = True
 
 
 class RatingCreate(BaseModel):
