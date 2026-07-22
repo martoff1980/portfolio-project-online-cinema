@@ -1,0 +1,104 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: ['develop']
+  pull_request:
+    branches: ['develop']
+
+jobs:
+  # --- 1. Этап непрерывной интеграции (CI) ---
+  tests:
+    name: Run Linter and Tests
+    runs-on: ubuntu-latest
+
+    services:
+      # Поднимаем тестовую СУБД PostgreSQL для интеграционных тестов
+      postgres_test:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_pass
+          POSTGRES_DB: online_cinema_test_db
+        ports:
+          - 5432:5432
+        # Ждем готовности СУБД перед запуском тестов
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      # Поднимаем Redis для тестов очередей задач
+      redis_test:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.7.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Load cached venv (if exists)
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+
+      # Проверка линтерами качества кода
+      - name: Run Black Formatter check
+        run: poetry run black . --check
+
+      - name: Run Flake8 check
+        run: poetry run flake8 . --max-line-length=120
+
+      # Запуск тестов с передачей тестовых переменных окружения
+      - name: Run Tests with Pytest
+        env:
+          DATABASE_URL: postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db
+          REDIS_URL: redis://localhost:6379/0
+          STRIPE_API_KEY: '' # Тесты будут использовать заглушку
+        run: poetry run pytest --cov=. --cov-report=xml
+
+  # --- 2. Этап непрерывного деплоя (CD) на AWS EC2 ---
+  deploy:
+    name: Deploy to AWS EC2
+    needs: tests # Деплой начнется только при успешном прохождении всех тестов
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Только при пуше в main
+
+    steps:
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            # Переходим в папку с проектом на сервере
+            cd /home/ubuntu/online-cinema
+
+            # Получаем свежий код из ветки main
+            git pull origin main
+
+            # Пересобираем и перезапускаем Docker-контейнеры
+            docker-compose down
+            docker-compose up -d --build
+
+            # (Опционально) Запускаем миграции базы данных внутри контейнера
+            docker-compose exec -T web alembic upgrade head
