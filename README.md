@@ -524,7 +524,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ## 6. **Docker and Docker Compose**
 
-<!-- <details> -->
+<details>
 
 - **Project Containerization**:
 
@@ -541,7 +541,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - **Single Command Setup**:
   - Use a single command to launch all services via Docker Compose for streamlined development and deployment.
 
-<!-- </details> -->
+</details>
 
 ## 7. **Poetry for Dependency Management**
 
