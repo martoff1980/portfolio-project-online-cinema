@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import List, Optional
 from datetime import datetime
 from sqlalchemy import (
@@ -142,18 +143,22 @@ class Movie(Base):
     )
     uuid: Mapped[str] = mapped_column(
         String, unique=True, nullable=False
-    )  # Генерируется на уровне приложения/БД
+    )
+    # Generating a UUID for each movie ensures that even
+    # if the movie's name changes,
+    # it can still be uniquely identified.
     name: Mapped[str] = mapped_column(String, nullable=False)
     year: Mapped[int] = mapped_column(Integer, nullable=False)
+    # Duration in minutes
     time: Mapped[int] = mapped_column(
         Integer, nullable=False
-    )  # Продолжительность в минутах
+    )
     imdb: Mapped[float] = mapped_column(Float, nullable=False)
     votes: Mapped[int] = mapped_column(Integer, default=0)
     meta_score: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     gross: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     description: Mapped[str] = mapped_column(String, nullable=False)
-    price: Mapped[Numeric] = mapped_column(Numeric(10, 2), nullable=False)
+    price: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
     certification_id: Mapped[int] = mapped_column(
         ForeignKey("certifications.id"), nullable=False
     )
@@ -193,6 +198,11 @@ class Movie(Base):
     )
     favorites: Mapped[List["FavoriteMovie"]] = relationship(
         "FavoriteMovie", back_populates="movie", cascade="all, delete-orphan"
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow
     )
 
 
