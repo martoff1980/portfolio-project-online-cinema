@@ -15,7 +15,7 @@ from src.models.auth import Base, UserGroup, UserGroupEnum
 TEST_DATABASE_URL = (
     "postgresql+asyncpg://"
     "cinema_test_user:cinema_test_pass"
-    "@db:5432/online_cinema_test_db"
+    "@localhost:5432/online_cinema_test_db"
 )
 
 engine_test = create_async_engine(TEST_DATABASE_URL, echo=False)
