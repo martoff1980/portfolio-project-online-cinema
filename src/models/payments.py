@@ -50,9 +50,10 @@ class Payment(Base):
     amount: Mapped[Decimal] = mapped_column(
         Numeric(10, 2), nullable=False
     )
+    # ID session or transaction in Stripe
     external_payment_id: Mapped[Optional[str]] = mapped_column(
         String, nullable=True
-    )  # ID сессии или транзакции в Stripe
+    )
 
     # relationship
     user: Mapped["User"] = relationship()
