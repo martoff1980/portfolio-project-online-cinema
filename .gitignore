@@ -1,15 +1,14 @@
 venv/
 .env
 
-
+.mypy_cache
 .pytest_cache/
 src/__pycache__/
 src/models/__pycache__/
 src/routes/__pycache__/
 src/schemas/__pycache__/
+src/tests/__pycache__/
 
 archive/
 
 .coverage
-
-plain.md
