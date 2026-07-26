@@ -24,7 +24,7 @@ async def test_complete_user_buy_movie_flow(ac, db_session):
     )
     user = result.scalar_one()
 
-    # Меняем флаг активности и фиксируем изменения в БД
+    # Update the activity flag and commit the changes to the database.
     user.is_active = True
     await db_session.commit()
     await db_session.refresh(user)
@@ -34,7 +34,7 @@ async def test_complete_user_buy_movie_flow(ac, db_session):
         "/auth/login",
         json={"email": user_email, "password": "UserPass123!"}
     )
-    # ПРОВЕРКА 1: Убедимся, что сервер вернул 200 OK, а не 400/422
+    # Let's verify that the server returned 200 OK, rather than 400 or 422.
     assert login_res.status_code == 200, (
         f"Login failed with status {login_res.status_code}:"
         f"{login_res.text}"
@@ -42,7 +42,7 @@ async def test_complete_user_buy_movie_flow(ac, db_session):
     token = login_res.json()["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
 
-    # 3. ПОДГОТОВКА ДАННЫХ: Создаем жанр Drama и фильм в тестовой БД
+    # Creating the "Drama" genre and a movie in the test database.
     certification = Certification(name="PG-13")
     db_session.add(certification)
 
@@ -89,7 +89,7 @@ async def test_complete_user_buy_movie_flow(ac, db_session):
         f"Unexpected order response format: {order_payload}"
     )
 
-    order_id = order_res.json()["order_id"]  
+    order_id = order_res.json()["order_id"]
     assert order_id is not None
 
     # Checking order status after placement
