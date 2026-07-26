@@ -26,13 +26,16 @@ class MovieService:
 
         # Filtering by genre (JOIN with the genres table)
         if filters.genre:
-            query = query.join(Movie.genres).where(Genre.name.ilike(f"%{filters.genre}%"))
+            query = query.join(Movie.genres).where(
+                Genre.name.ilike(f"%{filters.genre}%")
+            )
 
         # Search by name or description
         if filters.search:
             search_pattern = f"%{filters.search}%"
             query = query.where(
-                Movie.name.ilike(search_pattern) | Movie.description.ilike(search_pattern)
+                Movie.name.ilike(search_pattern) |
+                Movie.description.ilike(search_pattern)
             )
 
         # Band filters
@@ -60,12 +63,12 @@ class MovieService:
         else:
             query = query.order_by(desc(sort_column))
 
-        # 6. Пагинация (OFFSET & LIMIT)
+        # Pagination (OFFSET & LIMIT)
         offset = (filters.page - 1) * filters.limit
         query = query.offset(offset).limit(filters.limit)
 
-        # 7. Выполнение запроса
+        # Executing the request
         result = await db_session.execute(query)
 
-        # unique() требуется при работе с JOIN и selectinload в SQLAlchemy
+        # unique() need for JOIN and selectinload into SQLAlchemy
         return result.scalars().unique().all()
