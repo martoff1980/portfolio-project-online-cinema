@@ -1,14 +1,34 @@
 import uuid
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_db
+from src.schemas.movies import MovieFilter, MovieRead
+from src.services.movie_service import MovieService
 from src.models.movies import Movie, Genre, Director, Star
 from src.schemas.movies import MovieCreate, MovieResponse
 from src.dependencies import allow_moderator_or_admin
 
 router = APIRouter(prefix="/movies", tags=["Movies Catalog"])
+
+@router.get(
+    "",
+    response_model=List[MovieRead],
+    status_code=status.HTTP_200_OK
+)
+async def get_movies(
+    filters: MovieFilter = Depends(),
+    db_session: AsyncSession = Depends(get_db),
+):
+    """
+    Retrieving a list of movies with support for filtering (?genre=Drama),
+    searching, sorting, and pagination.
+    """
+    # filters.genre will automatically parse "Drama" from the URL "?genre=Drama"
+    movies = await MovieService.get_filtered_movies(db_session, filters)
+    return movies
 
 
 @router.post(
