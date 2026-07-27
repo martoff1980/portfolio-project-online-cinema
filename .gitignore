@@ -4,6 +4,7 @@ venv/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> auth
 =======
@@ -14,6 +15,10 @@ venv/
 
 .mypy_cache
 >>>>>>> services
+=======
+
+.mypy_cache/
+>>>>>>> cart
 .pytest_cache/
 src/__pycache__/
 src/models/__pycache__/
@@ -24,6 +29,7 @@ src/tests/__pycache__/
 archive/
 
 .coverage
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -46,3 +52,5 @@ archive/
 >>>>>>> payments
 =======
 >>>>>>> services
+=======
+>>>>>>> cart

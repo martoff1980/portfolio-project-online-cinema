@@ -246,7 +246,7 @@ This field is optional.
 
 ## 3. **Shopping Cart**
 
-<details>
+<!-- <details> -->
 
 - **User Functionality**:
 
@@ -325,7 +325,7 @@ this module.
 
 ![Cart DB schema](images/structure_carts.png)
 
-</details>
+<!-- </details> -->
 
 ## 4. **Order**
 
