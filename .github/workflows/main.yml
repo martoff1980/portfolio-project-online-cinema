@@ -65,11 +65,11 @@ jobs:
 
       # Mypy type checking
       - name: Run Flake8 check
-        run: poetry run flake8 . --max-line-length=80
+        run: poetry run flake8 . --exclude=venv --max-line-length=80
 
       - name: Run Mypy Type Checker
         run: |
-          poetry run mypy .
+          poetry run mypy . --exclude=venv
 
       - name: Generate Alembic migration
         env:
