@@ -13,6 +13,7 @@ from src.dependencies import allow_moderator_or_admin
 
 router = APIRouter(prefix="/movies", tags=["Movies Catalog"])
 
+
 @router.get(
     "",
     response_model=List[MovieRead],
@@ -26,7 +27,8 @@ async def get_movies(
     Retrieving a list of movies with support for filtering (?genre=Drama),
     searching, sorting, and pagination.
     """
-    # filters.genre will automatically parse "Drama" from the URL "?genre=Drama"
+    # filters.genre will automatically
+    # parse "Drama" from the URL "?genre=Drama"
     movies = await MovieService.get_filtered_movies(db_session, filters)
     return movies
 

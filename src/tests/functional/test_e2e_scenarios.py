@@ -89,7 +89,7 @@ async def test_complete_user_buy_movie_flow(ac, db_session):
         f"Unexpected order response format: {order_payload}"
     )
 
-    order_id = order_res.json()["order_id"]  
+    order_id = order_res.json()["order_id"]
     assert order_id is not None
 
     # Checking order status after placement

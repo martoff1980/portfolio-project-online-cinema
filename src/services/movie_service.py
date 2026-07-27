@@ -26,13 +26,16 @@ class MovieService:
 
         # Filtering by genre (JOIN with the genres table)
         if filters.genre:
-            query = query.join(Movie.genres).where(Genre.name.ilike(f"%{filters.genre}%"))
+            query = query.join(Movie.genres).where(
+                Genre.name.ilike(f"%{filters.genre}%")
+            )
 
         # 3. Поиск по названию или описанию
         if filters.search:
             search_pattern = f"%{filters.search}%"
             query = query.where(
-                Movie.name.ilike(search_pattern) | Movie.description.ilike(search_pattern)
+                Movie.name.ilike(search_pattern) |
+                Movie.description.ilike(search_pattern)
             )
 
         # 4. Фильтры диапазонов
