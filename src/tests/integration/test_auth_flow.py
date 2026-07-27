@@ -15,8 +15,7 @@ async def test_full_auth_and_activation_flow(
         "password": "SecurePassword123"
     }
     reg_response = await ac.post("/auth/register", json=reg_payload)
-    # Or 201
-    assert reg_response.status_code == 210
+    assert reg_response.status_code == 201
 
     # Check the user in the database and ensure they are inactive
     user_query = await db_session.execute(
