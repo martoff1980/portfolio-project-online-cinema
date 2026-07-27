@@ -93,10 +93,6 @@ class User(Base):
         "Cart",
         back_populates="user",
         cascade="all, delete-orphan",
-<<<<<<< HEAD
-=======
-        # passive_deletes=True
->>>>>>> cart
     )
 
 
