@@ -7,24 +7,14 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 
-# Импортируем наш конфигурационный объект и базовый класс моделей
 import sys
 from os.path import dirname, abspath
-
-# Добавляем корневую папку в пути, чтобы Python видел импорты
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
-
-# Импортируем Base и settings из нашего src
 from src.database import Base
 from src.config import settings
 
-# Импортируем ВСЕ модели, чтобы Alembic "увидел" их структуру при автогенерации
-from src.models.auth import User, UserGroup, ActivationToken
-from src.models.movies import Movie, Genre, Star, Comment, MovieLike, MovieRating
-from src.models.cart import Cart, CartItem
-from src.models.orders import Order, OrderItem
-from src.models.payments import Payment, PaymentItem
 
+# Add the root folder to the path so Python can see the imports
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -46,8 +36,9 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-# Динамически подставляем URL из переменных окружения
+# Dynamically inject the URL from environment variables.
 config.set_main_option("sqlalchemy.url", settings.get_database_url())
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
