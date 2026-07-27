@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # DB Service (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: cinema_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    build: .
+    command: alembic upgrade head
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+
+  # Broker for messaging and caching
+  redis:
+    image: redis:7-alpine
+    container_name: cinema_redis
+    restart: always
+    ports:
+      - '6379:6379'
+
+  # Main FastAPI web application
+  web:
+    build: .
+    container_name: cinema_web_api
+    restart: always
+    ports:
+      - '8000:8000'
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - STRIPE_API_KEY=${STRIPE_API_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - BASE_URL=${BASE_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      migrate:
+        condition: service_completed_successfully
+    # Start the FastAPI application using Uvicorn with hot-reloading enabled for development.
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # used by Celery for task queue management.
+  celery_worker:
+    build: .
+    container_name: cinema_celery_worker
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - PYTHONPATH=/app/src
+    command: celery -A src.tasks.celery_app worker --loglevel=info
+    depends_on:
+      - redis
+      - db
+
+  # Celery Beat is a scheduler that kicks off tasks at regular intervals,
+  # which are then executed by available worker nodes in the cluster. In this case, it is used to schedule periodic tasks for deleting tokens.
+  celery_beat:
+    build: .
+    container_name: cinema_celery_beat
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - PYTHONPATH=/app/src
+    command: celery -A src.tasks.celery_app beat --loglevel=info
+    depends_on:
+      - redis
+      - db
+
+volumes:
+  postgres_data:
