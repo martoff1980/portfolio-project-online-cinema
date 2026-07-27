@@ -572,8 +572,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
   - Execute all tests using `pytest` to validate functionality.
   - Generate and review code coverage reports for quality assurance.
 
-- **Continuous Deployment**:
-  - Automatically deploy the application after passing all checks and merging pull requests to AWS EC2.
+<!-- - **Continuous Deployment**:
+  - Automatically deploy the application after passing all checks and merging pull requests to AWS EC2. -->
 
 </details>
 
