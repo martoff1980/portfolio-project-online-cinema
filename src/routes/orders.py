@@ -154,10 +154,10 @@ async def get_my_orders(
 # Rout amin: view all orders with optional filters for user_id and status
 @router.get("/all-orders", response_model=List[OrderResponse])
 async def get_all_orders(
-    user_id: int = None,
-    status: OrderStatusEnum = None,
+    user_id: int | None = None,
+    status: OrderStatusEnum  | None = None,
     db: AsyncSession = Depends(get_db),
-    admin=Depends(allow_admin_only),  # Только администратор
+    admin=Depends(allow_admin_only),
 ):
     query = select(Order).options(
         selectinload(Order.items).selectinload(OrderItem.movie)

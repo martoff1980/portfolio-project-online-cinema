@@ -31,6 +31,9 @@ async def get_or_create_cart(user_id: int, db: AsyncSession) -> Cart:
         result = await db.execute(stmt)
         cart = result.scalars().first()
 
+    if cart is None:
+        raise RuntimeError("Failed to create cart")
+
     return cart
 
 

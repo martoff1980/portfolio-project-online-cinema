@@ -1,9 +1,9 @@
 import re
 from datetime import datetime, timedelta
-from typing import Dict, Any
-from jose import jwt, JWTError
-from passlib.context import CryptContext
-from fastapi import HTTPException, status
+from typing import Dict, Any, Optional
+from jose import jwt, JWTError  # type: ignore[import-untyped]
+from passlib.context import CryptContext  # type: ignore[import-untyped]
+from fastapi import HTTPException, status  # type: ignore[import-untyped]
 
 from src.config import settings
 
@@ -46,7 +46,7 @@ def validate_password_complexity(password: str) -> None:
         )
 
 
-def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta

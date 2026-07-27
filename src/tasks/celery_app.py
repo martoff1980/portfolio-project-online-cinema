@@ -1,7 +1,7 @@
 import os
 import asyncio
-from celery import Celery
-from celery.schedules import crontab
+from celery import Celery  # type: ignore[import-untyped]
+from celery.schedules import crontab  # type: ignore[import-untyped]
 from sqlalchemy import delete
 # Async generator for database sessions
 from src.database import AsyncSessionLocal as async_session_maker

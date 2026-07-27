@@ -1,5 +1,6 @@
 import os
 import stripe
+from decimal import Decimal
 from typing import List, Optional
 from fastapi import (
     APIRouter,
@@ -45,7 +46,7 @@ async def stripe_webhook(
         )
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid payload")
-    except stripe.error.SignatureVerificationError:
+    except stripe.error.SignatureVerificationError:  # type: ignore[attr-defined]
         raise HTTPException(status_code=400, detail="Invalid signature")
 
     # Stripe sends a webhook event when a checkout session
@@ -57,7 +58,7 @@ async def stripe_webhook(
         external_payment_id = session["id"]
         # Convert cents in dollars
         amount_paid = (
-            Numeric(session["amount_total"]) / 100
+            Decimal(session["amount_total"]) / Decimal("100")
         )
 
         # Search order in the database by ID and load its items
