@@ -1,6 +1,9 @@
 venv/
 .env
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> auth
 
 .mypy_cache/
 .pytest_cache/
@@ -12,6 +15,7 @@ src/schemas/__pycache__/
 archive/
 
 .coverage
+<<<<<<< HEAD
 =======
 
 .mypy_cache/
@@ -25,3 +29,5 @@ archive/
 
 .coverage
 >>>>>>> orders
+=======
+>>>>>>> auth

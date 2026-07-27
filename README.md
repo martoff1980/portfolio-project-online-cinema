@@ -9,7 +9,7 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 ## 1. **Authorization and Authentication**
 
-<details>
+<!-- <details> -->
 
 - **User Registration**: \
   Users should be able to register using their email. After registration, an email is sent with a link to activate their account. If the user does not activate their account within 24 hours, the link becomes
@@ -123,7 +123,7 @@ This field is optional.
 **DB schema**\
 ![Accounts DB schema](images/structure_auth.png)
 
-</details>
+<!-- </details> -->
 
 ## 2. **Movies**
 
