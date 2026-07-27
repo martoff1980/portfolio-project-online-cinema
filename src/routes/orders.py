@@ -9,7 +9,7 @@ from src.models.cart import Cart, CartItem
 from src.models.orders import Order, OrderItem, OrderStatusEnum
 from src.schemas.orders import OrderResponse, CheckoutResponse
 from src.dependencies import get_current_user, allow_admin_only
-from src.stripe_service import create_payment_session
+from src.services.stripe_service import create_payment_session
 
 router = APIRouter(prefix="/orders", tags=["Orders & Payments"])
 
