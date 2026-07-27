@@ -594,7 +594,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ## 10. Writing Tests
 
-<details>
+<!-- <details> -->
 
 - **API Endpoint Testing**:
 
@@ -621,5 +621,9 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - **Functional Tests**:
   - Cover end-to-end user scenarios such as registration, login, movie filtering, and order placement.
 
+<<<<<<< HEAD
 </details>
 >>>>>>> orders
+=======
+<!-- </details> -->
+>>>>>>> services

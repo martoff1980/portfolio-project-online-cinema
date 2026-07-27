@@ -3,21 +3,28 @@ venv/
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> auth
 =======
 >>>>>>> payments
 
 .mypy_cache/
+=======
+
+.mypy_cache
+>>>>>>> services
 .pytest_cache/
 src/__pycache__/
 src/models/__pycache__/
 src/routes/__pycache__/
 src/schemas/__pycache__/
+src/tests/__pycache__/
 
 archive/
 
 .coverage
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -37,3 +44,5 @@ archive/
 >>>>>>> auth
 =======
 >>>>>>> payments
+=======
+>>>>>>> services
