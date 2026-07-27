@@ -1,6 +1,6 @@
 import enum
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, TYPE_CHECKING
 from sqlalchemy import (
     Integer,
     String,
@@ -10,6 +10,9 @@ from sqlalchemy import (
     Enum as SQLEnum
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+
+if TYPE_CHECKING:
+    from src.models.cart import Cart
 
 
 class Base(DeclarativeBase):
@@ -84,6 +87,13 @@ class User(Base):
     )
     refresh_tokens: Mapped[List["RefreshToken"]] = relationship(
         back_populates="user", cascade="all, delete-orphan"
+    )
+
+    cart: Mapped["Cart"] = relationship(
+        "Cart",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        # passive_deletes=True
     )
 
 
