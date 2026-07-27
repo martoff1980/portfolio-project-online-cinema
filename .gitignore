@@ -8,6 +8,7 @@ src/__pycache__/
 src/models/__pycache__/
 src/routes/__pycache__/
 src/schemas/__pycache__/
+src/services/__pycache__/
 
 src/tests/__pycache__/
 src/tests/functional/__pycache__/
