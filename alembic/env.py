@@ -9,6 +9,7 @@ from alembic import context
 
 import sys
 from os.path import dirname, abspath
+
 from src.database import Base
 from src.config import settings
 

@@ -65,7 +65,7 @@ jobs:
 
       # Mypy type checking
       - name: Run Flake8 check
-        run: poetry run flake8 . --exclude=venv,.venv,migrations --max-line-length=80
+        run: poetry run flake8 . --exclude=venv,.venv,alembic/versions/ --max-line-length=80
 
       - name: Run Mypy Type Checker
         run: |
