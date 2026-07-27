@@ -1,7 +1,7 @@
 venv/
 .env
 
-
+.mypy_cache
 .pytest_cache/
 src/__pycache__/
 src/models/__pycache__/
@@ -11,5 +11,3 @@ src/schemas/__pycache__/
 archive/
 
 .coverage
-
-plain.md
