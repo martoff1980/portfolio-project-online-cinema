@@ -155,7 +155,7 @@ async def get_my_orders(
 @router.get("/all-orders", response_model=List[OrderResponse])
 async def get_all_orders(
     user_id: int | None = None,
-    status: OrderStatusEnum  | None = None,
+    status: OrderStatusEnum | None = None,
     db: AsyncSession = Depends(get_db),
     admin=Depends(allow_admin_only),
 ):

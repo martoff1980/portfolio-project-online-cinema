@@ -10,7 +10,7 @@ from fastapi import (
     Request,
     status
 )
-from sqlalchemy import select, Numeric
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
@@ -46,7 +46,7 @@ async def stripe_webhook(
         )
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid payload")
-    except stripe.error.SignatureVerificationError:  # type: ignore[attr-defined]
+    except stripe.error.SignatureVerificationError:  # type: ignore[attr-defined] # noqa: E501
         raise HTTPException(status_code=400, detail="Invalid signature")
 
     # Stripe sends a webhook event when a checkout session
