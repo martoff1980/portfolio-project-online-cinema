@@ -7,6 +7,8 @@ convenience, a wide selection of content, and the ability to personalize the use
 
 ## 1. **Authorization and Authentication**
 
+</details>
+
 - **User Registration**: \
   Users should be able to register using their email. After registration, an email is sent with a link to activate their account. If the user does not activate their account within 24 hours, the link becomes
   invalid. If the user fails to activate their account within 24 hours, they should have the option to enter their email to receive a new activation link, valid for another 24 hours. Use `celery-beat`
@@ -118,6 +120,8 @@ This field is optional.
 
 **DB schema**\
 ![Accounts DB schema](images/structure_auth.png)
+
+</details>
 
 ## 2. **Movies**
 
@@ -240,6 +244,8 @@ This field is optional.
 
 ## 3. **Shopping Cart**
 
+<details>
+
 - **User Functionality**:
 
   - Users can add movies to the cart if they have not been purchased yet.
@@ -317,7 +323,11 @@ this module.
 
 ![Cart DB schema](images/structure_carts.png)
 
+<details>
+
 ## 4. **Order**
+
+</details>
 
 - **User Functionality**:
 
@@ -411,7 +421,11 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ![Order DB schema](images/structure_orders.png)
 
+</details>
+
 ## 5. **Payments**
+
+<details>
 
 - **User Functionality**:
 
@@ -506,7 +520,11 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ![Payment DB schema](images/structure_payment.png)
 
+</details>
+
 ## 6. **Docker and Docker Compose**
+
+<details>
 
 - **Project Containerization**:
 
@@ -522,6 +540,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 - **Single Command Setup**:
   - Use a single command to launch all services via Docker Compose for streamlined development and deployment.
+
+</details>
 
 ## 7. **Poetry for Dependency Management**
 
@@ -571,6 +591,8 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 </details>
 
 ## 10. Writing Tests
+
+<details>
 
 - **API Endpoint Testing**:
 
