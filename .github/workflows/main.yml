@@ -1,0 +1,153 @@
+name: CI/CD Pipeline - Online Cinema Backend
+
+on:
+  push:
+    branches: ['develop']
+  pull_request:
+    branches: ['develop']
+
+jobs:
+  test:
+    name: Run Type Checking & Test Suite
+    runs-on: ubuntu-latest
+
+    # Spinning up services for integration and E2E tests
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_pass
+          POSTGRES_DB: online_cinema_test_db
+        ports:
+          - 5432:5432
+        # Waiting for the database to become available for connections.
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.8.2
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      # Caching dependencies to speed up the build
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+
+      - name: Install project
+        run: poetry install --no-interaction
+
+      # Mypy type checking
+      - name: Run Flake8 check
+        run: poetry run flake8 . --max-line-length=80
+
+      - name: Run Mypy Type Checker
+        run: |
+          poetry run mypy .
+
+      - name: Generate Alembic migration
+        env:
+          DATABASE_URL: postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db
+        run: |
+          poetry run alembic upgrade head
+
+      # Unit Tests
+      # Rapid testing of business logic and schemas without database access
+      - name: Run Unit Tests
+        env:
+          TESTING: True
+          DATABASE_URL: postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db
+          REDIS_URL: redis://localhost:6379/0
+          STRIPE_API_KEY: ''
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_pass
+          POSTGRES_DB: online_cinema_test_db
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET_KEY: test_secret_key_12345
+        run: |
+          poetry run pytest src/tests/unit -v --asyncio-mode=auto
+
+      # Integration Tests
+      # Verification of services, database sessions, and component interactions.
+      - name: Run Integration Tests
+        env:
+          TESTING: True
+          DATABASE_URL: postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db
+          REDIS_URL: redis://localhost:6379/0
+          STRIPE_API_KEY: ''
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_pass
+          POSTGRES_DB: online_cinema_test_db
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET_KEY: test_secret_key_12345
+        run: |
+          poetry run pytest src/tests/integration -v --asyncio-mode=auto
+
+      # Functional / End-to-End Tests
+      # End-to-end testing of API chains (Registration -> Authorization -> Catalog -> Cart -> Order)
+      - name: Run Functional (E2E) Tests
+        env:
+          TESTING: True
+          DATABASE_URL: postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db
+          REDIS_URL: redis://localhost:6379/0
+          STRIPE_API_KEY: ''
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_pass
+          POSTGRES_DB: online_cinema_test_db
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET_KEY: test_secret_key_12345
+        run: |
+          poetry run pytest src/tests/functional -v --asyncio-mode=auto
+
+      # Code Coverage
+      - name: Run All Tests with Coverage Report
+        env:
+          TESTING: True
+          DATABASE_URL: postgresql+asyncpg://cinema_test_user:cinema_test_pass@localhost:5432/online_cinema_test_db
+          REDIS_URL: redis://localhost:6379/0
+          STRIPE_API_KEY: ''
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: cinema_test_user
+          POSTGRES_PASSWORD: cinema_test_pass
+          POSTGRES_DB: online_cinema_test_db
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET_KEY: test_secret_key_12345
+        run: |
+          poetry run pytest src/tests/ --cov=src --cov-report=xml --cov-report=term-missing
