@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # Online Cinema
 
 An online cinema is a digital platform that allows users to select, watch, and purchase access to movies and other video materials via the internet. These services have become popular due to their
@@ -8,8 +6,6 @@ convenience, a wide selection of content, and the ability to personalize the use
 ## Key Features of Online Cinema
 
 ## 1. **Authorization and Authentication**
-
-<!-- <details> -->
 
 - **User Registration**: \
   Users should be able to register using their email. After registration, an email is sent with a link to activate their account. If the user does not activate their account within 24 hours, the link becomes
@@ -122,8 +118,6 @@ This field is optional.
 
 **DB schema**\
 ![Accounts DB schema](images/structure_auth.png)
-
-<!-- </details> -->
 
 ## 2. **Movies**
 
@@ -246,8 +240,6 @@ This field is optional.
 
 ## 3. **Shopping Cart**
 
-<!-- <details> -->
-
 - **User Functionality**:
 
   - Users can add movies to the cart if they have not been purchased yet.
@@ -325,11 +317,7 @@ this module.
 
 ![Cart DB schema](images/structure_carts.png)
 
-<!-- </details> -->
-
 ## 4. **Order**
-
-<!-- <details> -->
 
 - **User Functionality**:
 
@@ -423,11 +411,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ![Order DB schema](images/structure_orders.png)
 
-<!-- </details> -->
-
 ## 5. **Payments**
-
-<!-- <details> -->
 
 - **User Functionality**:
 
@@ -522,11 +506,7 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ![Payment DB schema](images/structure_payment.png)
 
-<!-- </details> -->
-
 ## 6. **Docker and Docker Compose**
-
-<!-- <details> -->
 
 - **Project Containerization**:
 
@@ -542,8 +522,6 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 - **Single Command Setup**:
   - Use a single command to launch all services via Docker Compose for streamlined development and deployment.
-
-<!-- </details> -->
 
 ## 7. **Poetry for Dependency Management**
 
@@ -594,8 +572,6 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 
 ## 10. Writing Tests
 
-<!-- <details> -->
-
 - **API Endpoint Testing**:
 
   - Verify that endpoints return correct responses.
@@ -621,9 +597,4 @@ Below is a detailed description of the **Order** and **OrderItem** entities and 
 - **Functional Tests**:
   - Cover end-to-end user scenarios such as registration, login, movie filtering, and order placement.
 
-<<<<<<< HEAD
 </details>
->>>>>>> orders
-=======
-<!-- </details> -->
->>>>>>> services
