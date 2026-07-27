@@ -5,17 +5,20 @@ from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker
 )
-from httpx import AsyncClient
+from httpx import AsyncClient, ASGITransport
 
 from src.main import app
 from src.database import get_db
 from src.models.auth import Base, UserGroup, UserGroupEnum
 
+
+transport = ASGITransport(app=app)
+
 # Test db (inside container)
 TEST_DATABASE_URL = (
     "postgresql+asyncpg://"
     "cinema_test_user:cinema_test_pass"
-    "@db:5432/online_cinema_test_db"
+    "@localhost:5432/online_cinema_test_db"
 )
 
 engine_test = create_async_engine(TEST_DATABASE_URL, echo=False)
@@ -81,6 +84,8 @@ async def ac(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
 
     app.dependency_overrides[get_db] = _override_get_db
 
-    async with AsyncClient(app=app, base_url="http://test") as client:
+    async with AsyncClient(
+        transport=transport, base_url="http://test"
+    ) as client:
         yield client
     app.dependency_overrides.clear()
