@@ -145,7 +145,7 @@ class MovieFilter(BaseModel):
 class GenreRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
-    """Схема для чтения данных о жанре."""
+    """Schema for reading genre data."""
     id: int
     name: str
 
@@ -153,7 +153,7 @@ class GenreRead(BaseModel):
 class MovieRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
-    """Схема для представления информации о фильме в API."""
+    """Schema for representing movie information in the API."""
     id: int
     name: str
     description: Optional[str] = None
