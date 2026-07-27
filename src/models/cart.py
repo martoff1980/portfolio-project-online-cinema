@@ -35,11 +35,16 @@ class Cart(Base):
     )
 
     # relationship
-    user: Mapped["User"] = relationship()
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="cart"
+    )
+
     items: Mapped[List["CartItem"]] = relationship(
         "CartItem",
         back_populates="cart",
-        cascade="all, delete-orphan"
+        cascade="all, delete-orphan",
+        # passive_deletes=True
     )
 
 
