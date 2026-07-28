@@ -33,7 +33,7 @@ def create_payment_session(
                                 f"Order #{order_id} - Online Cinema Access",
                         },
                         # Stripe accepts cents.
-                        "unit_amount": int(total_amount * 100),
+                        "unit_amount": round(total_amount * 100),
                     },
                     "quantity": 1,
                 }
