@@ -46,7 +46,7 @@ async def stripe_webhook(
         )
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid payload")
-    except stripe.error.SignatureVerificationError:  # type: ignore[attr-defined]
+    except stripe.error.SignatureVerificationError:  # type: ignore[attr-defined] # noqa: E501
         raise HTTPException(status_code=400, detail="Invalid signature")
 
     # Stripe sends a webhook event when a checkout session
